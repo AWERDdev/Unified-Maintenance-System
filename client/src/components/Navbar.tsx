@@ -15,7 +15,7 @@ export const NavBar = () => {
             {/* Changed justify-center to justify-between + added padding axes. 
               items-center aligns the logo, text, and button vertically without hardcoded top margins.
             */}
-<nav 
+        <nav 
             className="flex justify-between items-center px-6 md:px-12 py-4 shadow-md w-full bg-[#0B2545] text-white"
             dir={isRTL ? "rtl" : "ltr"}
         >
@@ -27,7 +27,7 @@ export const NavBar = () => {
                     width={50} 
                     height={50}
                     className="hover:cursor-pointer transition-transform hover:scale-105"
-                    onClick={() => router.push('https://moe.gov.eg/')}
+                    onClick={() => router.push('/')}
                 />
             </div>
             

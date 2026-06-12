@@ -2,8 +2,10 @@
 import {ROUTES} from "@/Types/Routing"
 import { useRouter } from "next/navigation";
 import { NavBar } from "@/components/Navbar";
-import { contentDict , useLanguage} from "@/tools/LanguageHandler";
-import { Fotter } from "@/components/Fotter";
+import { useLanguage} from "@/tools/LanguageHandler";
+import { contentDict } from "@/Dict/Content_DICT";
+import { Fotter1 } from "@/components/Fotter";
+
 const IntroPage = () => {
   const router = useRouter()
   const { lang } = useLanguage()
@@ -70,7 +72,7 @@ const IntroPage = () => {
       </main>
       
       {/* 3. Global Footer */}
-      <Fotter/>
+      <Fotter1/>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 'use client'
 import { NavBar } from "@/components/Navbar";
-import { Fotter } from "@/components/Fotter";
-import { contentDict, useLanguage } from "@/tools/LanguageHandler";
+import { Fotter1} from "@/components/Fotter";
+import {useLanguage } from "@/tools/LanguageHandler";
+import { contentDict } from "@/Dict/Content_DICT";
 
 export default function AboutPage() {
   const { lang } = useLanguage();
@@ -78,7 +79,7 @@ export default function AboutPage() {
           </section>
 
         </main>
-        <Fotter/>
+        <Fotter1/>
       </div>
     </>
   );

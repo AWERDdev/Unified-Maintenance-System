@@ -1,0 +1,42 @@
+{
+  "themeName": "Egyptian Ministry of Education Official Palette",
+  "version": "1.0.0",
+  "colors": {
+    "primary": {
+      "main": "#0B2545",
+      "dark": "#13315C",
+      "light": "#134074",
+      "description": "Deep Navy Blue - Dominates navigation headers, sidebars, and primary portal containers to establish authority."
+    },
+    "accent": {
+      "gold": "#C5A880",
+      "goldHover": "#B0926A",
+      "metallic": "#D4AF37",
+      "description": "State Gold - Extracted directly from the Egyptian Eagle Crest. Used for active state borders, focus indicators, and key action buttons."
+    },
+    "background": {
+      "default": "#F4F6F9",
+      "paper": "#FFFFFF",
+      "subtle": "#E8ECEF",
+      "description": "Off-White & Light Grays - Clean base scales that ensure forms remain highly readable and look professional without causing eye strain."
+    },
+    "text": {
+      "primary": "#0A192F",
+      "secondary": "#4A5568",
+      "disabled": "#A0AEC0",
+      "description": "Contrast Slate - High-contrast text values ensuring readability guidelines match official government accessibility frameworks."
+    },
+    "status": {
+      "success": "#2D3748",
+      "info": "#2B6CB0",
+      "warning": "#DD6B20",
+      "danger": "#E53E3E",
+      "description": "System state colors for alerts, log trackers, error handlers, or application status flows."
+    }
+  },
+  "uiPreferences": {
+    "borderRadius": "0.375rem",
+    "fontFamily": "Inter, Cairo, sans-serif",
+    "notes": "Official MOE portals keep borders highly structured and square (md rounding at most) to maintain a rigid, official organizational appearance."
+  }
+}

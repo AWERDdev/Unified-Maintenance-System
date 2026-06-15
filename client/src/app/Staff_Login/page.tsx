@@ -93,7 +93,7 @@ export default function ParentLoginPage() {
                 <p className="text-xs text-[#4A5568] leading-normal">
                   {t.loginForm.noAccount}
                   <a 
-                    href={ROUTES.ParentSignup} 
+                    href={ROUTES.Staff_Signup} 
                     className="block sm:inline text-[#B0926A] font-bold hover:underline sm:mx-1 transition-colors mt-1 sm:mt-0"
                   >
                     {t.nav.signup}

@@ -21,7 +21,7 @@ export default function AboutPage() {
         </header>
 
         {/* 2. Main Executive Content Body */}
-        <main className="flex-grow max-w-5xl w-full mx-auto px-6 py-12">
+        <main className="grow max-w-5xl w-full mx-auto px-6 py-12">
           
           {/* Header Hero Section */}
           <div className="text-center border-b border-[#E8ECEF] pb-8 mb-10">

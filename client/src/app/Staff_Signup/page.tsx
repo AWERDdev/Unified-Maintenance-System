@@ -80,20 +80,40 @@ export default function ParentSignupPage() {
                 />
               </div>
               
-              <div className="space-y-1">
+          <div className="space-y-1">
+  <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
+    {t.signupForm.labels.selectStaffType}
+  </label>
+  <select 
+    name="Staff_Type" 
+    id="Staff_Type" 
+    defaultValue=""
+    className="w-full h-10 px-4 py-2 text-sm rounded border border-[#E8ECEF] bg-[#F4F6F9] text-[#4A5568] focus:outline-none focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] transition-colors cursor-pointer appearance-none"
+  >
+    <option value="" disabled hidden>
+      {isRTL ? "-- اختر الصفة الوظيفية --" : "-- Select Role --"}
+    </option>
+    <option value="Teacher">
+      {t.signupForm.select.Teacher_option}
+    </option>
+    <option value="IT_Administrator">
+      {t.signupForm.select.IT_Administrator_option}
+    </option>
+    <option value="Principal">
+      {t.signupForm.select.Principal_option}
+    </option>
+  </select>
+</div>
+              {/* <div className="space-y-1">
                 <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
                   {t.signupForm.labels.phone}
                 </label>
-                <select name="Staff_Type" id="Staff_Type" defaultValue="">
-                  <option value={""}></option>
-                  <option value={""}></option>
-                  <option value={""}></option>
-                  <option value={""}></option>
-                </select>
-                
-              </div>
-                
-
+                <input 
+                  type="text" 
+                  placeholder={t.signupForm.teacher_code}
+                  className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm font-mono"
+                />
+              </div> */}
               {/* Field 4: Password */}
               <div className="space-y-1">
                 <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
@@ -136,7 +156,7 @@ export default function ParentSignupPage() {
                 <p className="text-xs text-[#4A5568]">
                   {t.signupForm.hasAccount}
                   <a 
-                    href={ROUTES.ParentLogin} 
+                    href={ROUTES.Staff_Login} 
                     className="text-[#B0926A] font-bold hover:underline mx-1 transition-colors"
                   >
                     {t.nav.login}

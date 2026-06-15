@@ -33,19 +33,20 @@ export const NavBar = () => {
             </div>
             
             {/* Navigation options & language actions wrapper */}
-            <div className="flex items-center gap-4 md:gap-8 text-base md:text-md">
-                <a href={ROUTES.ParentSignup} className="hover:underline hover:text-[#C5A880] transition-colors font-medium">
+            <div className=" flex items-center gap-4 md:gap-8 text-base md:text-md">
+                <div className="hidden md:flex gap-4 md:gap-8">
+                <a href={ROUTES.Staff_Signup} className="hover:underline hover:text-[#C5A880] transition-colors font-medium">
                     {t.nav.signup}
                 </a>
                 
-                <a href={ROUTES.ParentLogin} className="hover:underline hover:text-[#C5A880] transition-colors font-medium">
+                <a href={ROUTES.Staff_Login} className="hover:underline hover:text-[#C5A880] transition-colors font-medium">
                     {t.nav.login}
                 </a>
                 
                 <a href={ROUTES.About} className="hover:underline hover:text-[#C5A880] transition-colors font-medium">
                     {t.nav.about}
                 </a>
-                
+                </div>
                 {/* Universal Language Switcher Button */}
                 <button 
                     onClick={toggleLanguage}

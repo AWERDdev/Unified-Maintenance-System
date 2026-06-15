@@ -1,8 +1,8 @@
 export const ROUTES = {
 "IntroPage":'/',
 "Main_Page":'/Main_page',
-"ParentLogin":'/ParentLogin',
-"ParentSignup":'/ParentSignup',
+"Staff_Signup":'/Staff_Signup',
+"Staff_Login":'/Staff_Login',
 "About":'/About',
 }as const;
   

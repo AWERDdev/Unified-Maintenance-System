@@ -19,6 +19,7 @@ export type TranslationKeys = {
       phone: string;
       password: string;
       confirmPassword: string;
+      selectStaffType:string;
 
     };
     placeholders: {
@@ -32,7 +33,8 @@ export type TranslationKeys = {
       Teacher_option:string;
       IT_Administrator_option:string;
       Principal_option:string;
-    }
+    };
+    teacher_code:string;
   };
       // Add this inside your TranslationKeys type definition
 loginForm: {

@@ -51,6 +51,7 @@ export const contentDict: Record<string, TranslationKeys> = {
         phone: "Official Mobile Number",
         password: "Account Access Password",
         confirmPassword: "Re-enter Security Password",
+        selectStaffType: "Select Personnel Classification Role"
       },
       placeholders: {
         fullName: "e.g., Ahmed Mohamed Mansour",
@@ -59,11 +60,12 @@ export const contentDict: Record<string, TranslationKeys> = {
       disclaimer: "By confirming registration parameters, you certify that your identity matches the verified personnel register of the educational directorate.",
       submitBtn: "Initialize Secure Account Credentials",
       hasAccount: "Already possess an active personnel profile?",
-      select:{
-        Teacher_option:"",
-        IT_Administrator_option:"",
-        Principal_option:""
-      }
+      select: {
+        Teacher_option: "Academic Educator / Teacher",
+        IT_Administrator_option: "IT Infrastructure Administrator",
+        Principal_option: "School Principal / Executive Director"
+      },
+      teacher_code: "Official Ministry Teacher Verification Code"
     },
     
     // 5. Authorative Login Access Form (Fits your current Login Form)
@@ -122,7 +124,7 @@ export const contentDict: Record<string, TranslationKeys> = {
         phone: "رقم الهاتف المحمول المعتمد",
         password: "كلمة مرور الحساب الجديدة",
         confirmPassword: "إعادة تأكيد كلمة المرور المقترحة",
-      
+        selectStaffType: "اختر الصفة الوظيفية للكادر الإداري"
       },
       placeholders: {
         fullName: "مثال: أحمد محمد منصور",
@@ -131,11 +133,12 @@ export const contentDict: Record<string, TranslationKeys> = {
       disclaimer: "بالضغط على إنشاء الحساب، فإنك تقر بأنك موظف مقيد بقطاع التربية والتعليم وأن كافة البيانات المدخلة تطابق السجلات الرسمية للأحوال المدنية.",
       submitBtn: "إنشاء وتسجيل الحساب المعتمد",
       hasAccount: "هل لديك حساب إداري مسجل بالفعل على المنصة؟",
-      select:{
-        Teacher_option:"",
-        IT_Administrator_option:"",
-        Principal_option:""
-      }
+      select: {
+        Teacher_option: "معلم / كادر تعليمي",
+        IT_Administrator_option: "مسؤول تطوير تكنولوجي / شبكات",
+        Principal_option: "مدير المنشأة التعليمية"
+      },
+      teacher_code: "كود المعلم الوزاري المعتمد"
     },
     
     // 5. نموذج تسجيل الدخول الآمن للبوابة

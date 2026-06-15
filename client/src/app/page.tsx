@@ -24,7 +24,7 @@ const IntroPage = () => {
       </header>
 
       {/* 2. Main Content Area */}
-      <main className="flex-grow flex items-center justify-center py-16 px-6 lg:px-16 max-w-7xl mx-auto w-full">
+      <main className="grow flex items-center justify-center py-16 px-6 lg:px-16 max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           
           {/* Hero Text content Column */}
@@ -55,7 +55,7 @@ const IntroPage = () => {
 
           {/* Graphical/Illustrative Column */}
           <div className="flex justify-center items-center">
-            <div className="relative w-full max-w-md h-80 md:h-[400px] bg-gradient-to-tr from-[#0B2545] to-[#1d4474] rounded-2xl shadow-xl flex items-center justify-center p-8 overflow-hidden">
+            <div className="relative w-full max-w-md h-80 md:h-100 bg-linear-to-tr from-[#0B2545] to-[#1d4474] rounded-2xl shadow-xl flex items-center justify-center p-8 overflow-hidden">
               {/* Decorative accent layers background */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#C5A880] opacity-20 rounded-full blur-2xl transform translate-x-10 -translate-y-10"></div>
               

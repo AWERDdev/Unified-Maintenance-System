@@ -19,7 +19,7 @@ export type TranslationKeys = {
       phone: string;
       password: string;
       confirmPassword: string;
-      captcha: string;
+
     };
     placeholders: {
       fullName: string;
@@ -28,6 +28,11 @@ export type TranslationKeys = {
     disclaimer: string;
     submitBtn: string;
     hasAccount: string;
+    select:{
+      Teacher_option:string;
+      IT_Administrator_option:string;
+      Principal_option:string;
+    }
   };
       // Add this inside your TranslationKeys type definition
 loginForm: {

@@ -55,7 +55,7 @@ export default function ParentSignupPage() {
                 />
               </div>
 
-              {/* Field 2: Parent National ID */}
+              {/* Field 2: National ID */}
               <div className="space-y-1">
                 <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
                   {t.signupForm.labels.nationalId}
@@ -79,6 +79,20 @@ export default function ParentSignupPage() {
                   className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm font-mono"
                 />
               </div>
+              
+              <div className="space-y-1">
+                <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
+                  {t.signupForm.labels.phone}
+                </label>
+                <select name="Staff_Type" id="Staff_Type" defaultValue="">
+                  <option value={""}></option>
+                  <option value={""}></option>
+                  <option value={""}></option>
+                  <option value={""}></option>
+                </select>
+                
+              </div>
+                
 
               {/* Field 4: Password */}
               <div className="space-y-1">

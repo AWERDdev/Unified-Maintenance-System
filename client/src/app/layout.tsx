@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { cookies } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,20 +12,34 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Estemara",
-  description: "created by كيرلس رامي جرجس",
-};
+export const generateMetadata = async  () =>{
+  const cookieStore = await cookies()
+  const lang = cookieStore.get("lang")?.value || "en"
 
-export default function RootLayout({
+  return{
+    title:lang === "ar"
+    ?"منظومة بلاغات الصيانة الموحدة"
+    :"Unified Maintenance Escalation System",
+    description:lang === "ar"
+    ? "إنشاء كيرلس رامي جرجس" 
+    : "Created by Kirlous Rami Gerges",
+  }
+
+}
+
+export default async function  RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies()
+  const lang = cookieStore.get("lang")?.value || "en"
+  const isRTL = lang === "ar";
+
   return (
     <html
-      lang="en"
-      dir="ltr"
+      lang={lang}
+      dir={isRTL?"rtl":"ltr"}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

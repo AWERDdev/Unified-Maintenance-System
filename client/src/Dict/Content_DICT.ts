@@ -61,9 +61,10 @@ export const contentDict: Record<string, TranslationKeys> = {
       submitBtn: "Initialize Secure Account Credentials",
       hasAccount: "Already possess an active personnel profile?",
       select: {
-        Teacher_option: "Academic Educator / Teacher",
-        IT_Administrator_option: "IT Infrastructure Administrator",
-        Principal_option: "School Principal / Executive Director"
+        Teacher_staff_option: "Academic Educator / Teacher / Staff",
+        IT_Administrator_option: "IT Infrastructure Admin",
+        Principal_option: "School Principal / Executive Director",
+        Vice_Principal_option: "School Vice Principal / Operational Director"
       },
       teacher_code: "Official Ministry Teacher Verification Code"
     },
@@ -74,7 +75,7 @@ export const contentDict: Record<string, TranslationKeys> = {
       labels: {
         nationalId: "National Identification Number (14 Digits)",
         password: "System Password",
-        rememberMe: "Maintain active session token token",
+        rememberMe: "Maintain active session token",
         forgotPassword: "Reset credentials parameters?"
       },
       submitBtn: "Authorize Account Clearance",
@@ -134,9 +135,10 @@ export const contentDict: Record<string, TranslationKeys> = {
       submitBtn: "إنشاء وتسجيل الحساب المعتمد",
       hasAccount: "هل لديك حساب إداري مسجل بالفعل على المنصة؟",
       select: {
-        Teacher_option: "معلم / كادر تعليمي",
+        Teacher_staff_option: "معلم / كادر تعليمي / عمال",
         IT_Administrator_option: "مسؤول تطوير تكنولوجي / شبكات",
-        Principal_option: "مدير المنشأة التعليمية"
+        Principal_option: "مدير المنشأة التعليمية",
+        Vice_Principal_option: "ناظر المدرسة / كادر إداري تشغيلي"
       },
       teacher_code: "كود المعلم الوزاري المعتمد"
     },

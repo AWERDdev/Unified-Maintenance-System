@@ -81,7 +81,7 @@ export default function ParentSignupPage() {
               </div>
               
           <div className="space-y-1">
-  <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
+  {/* <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
     {t.signupForm.labels.selectStaffType}
   </label>
   <select 
@@ -94,7 +94,7 @@ export default function ParentSignupPage() {
       {isRTL ? "-- اختر الصفة الوظيفية --" : "-- Select Role --"}
     </option>
     <option value="Teacher">
-      {t.signupForm.select.Teacher_option}
+      {t.signupForm.select.Teacher_staff_option}
     </option>
     <option value="IT_Administrator">
       {t.signupForm.select.IT_Administrator_option}
@@ -102,18 +102,12 @@ export default function ParentSignupPage() {
     <option value="Principal">
       {t.signupForm.select.Principal_option}
     </option>
-  </select>
+    <option value="Vice_Principal">
+      {t.signupForm.select.Vice_Principal_option}
+    </option>
+  </select> */}
 </div>
-              {/* <div className="space-y-1">
-                <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
-                  {t.signupForm.labels.phone}
-                </label>
-                <input 
-                  type="text" 
-                  placeholder={t.signupForm.teacher_code}
-                  className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm font-mono"
-                />
-              </div> */}
+
               {/* Field 4: Password */}
               <div className="space-y-1">
                 <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">

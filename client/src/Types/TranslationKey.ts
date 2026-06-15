@@ -30,9 +30,11 @@ export type TranslationKeys = {
     submitBtn: string;
     hasAccount: string;
     select:{
-      Teacher_option:string;
+      Teacher_staff_option:string;
       IT_Administrator_option:string;
       Principal_option:string;
+      Vice_Principal_option:string;
+
     };
     teacher_code:string;
   };

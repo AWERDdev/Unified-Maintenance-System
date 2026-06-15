@@ -24,7 +24,7 @@ export default function ParentLoginPage() {
         </header>
 
         {/* 2. Centralized Gateway Authentication Frame */}
-        <main className="flex-grow flex items-center justify-center px-4 py-12 md:py-20">
+        <main className="grow flex items-center justify-center px-4 py-12 md:py-20">
           <div className="bg-white w-full max-w-md rounded-lg shadow-md border border-[#E8ECEF] overflow-hidden">
             
             {/* Top Identity Accent Stripe */}
@@ -84,6 +84,7 @@ export default function ParentLoginPage() {
               <button 
                 type="submit"
                 className="w-full bg-[#0B2545] hover:bg-[#13315C] text-white font-bold py-3 px-4 rounded-lg transition-all text-sm cursor-pointer shadow-sm"
+                onClick={()=>{router.push(ROUTES.Main_Page)}}
               >
                 {t.loginForm.submitBtn}
               </button>

@@ -8,9 +8,12 @@ app.use(cors({
     origin: 'http://localhost:3000',
 
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const connect_DB = require("./DB/DB")
 
+connect_DB()
 
 app.get('/', (req, res) => {
   res.json({ message: 'This is the root endpoint Speaking' });

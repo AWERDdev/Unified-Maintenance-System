@@ -1,3 +1,4 @@
 node_modules
 .zip
 Code_from_other_projects
+.env

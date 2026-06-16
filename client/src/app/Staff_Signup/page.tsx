@@ -53,6 +53,7 @@ export default function ParentSignupPage() {
                   placeholder={t.signupForm.placeholders.fullName}
                   className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm"
                 />
+                required
               </div>
 
               {/* Field 2: National ID */}
@@ -65,6 +66,7 @@ export default function ParentSignupPage() {
                   maxLength={14}
                   placeholder="2950101210xxxx"
                   className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm font-mono tracking-wider"
+                required
                 />
               </div>
 
@@ -77,36 +79,23 @@ export default function ParentSignupPage() {
                   type="tel" 
                   placeholder={t.signupForm.placeholders.phone}
                   className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm font-mono"
+                required
                 />
               </div>
               
-          <div className="space-y-1">
-  {/* <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
-    {t.signupForm.labels.selectStaffType}
-  </label>
-  <select 
-    name="Staff_Type" 
-    id="Staff_Type" 
-    defaultValue=""
-    className="w-full h-10 px-4 py-2 text-sm rounded border border-[#E8ECEF] bg-[#F4F6F9] text-[#4A5568] focus:outline-none focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] transition-colors cursor-pointer appearance-none"
-  >
-    <option value="" disabled hidden>
-      {isRTL ? "-- اختر الصفة الوظيفية --" : "-- Select Role --"}
-    </option>
-    <option value="Teacher">
-      {t.signupForm.select.Teacher_staff_option}
-    </option>
-    <option value="IT_Administrator">
-      {t.signupForm.select.IT_Administrator_option}
-    </option>
-    <option value="Principal">
-      {t.signupForm.select.Principal_option}
-    </option>
-    <option value="Vice_Principal">
-      {t.signupForm.select.Vice_Principal_option}
-    </option>
-  </select> */}
-</div>
+              <div className="space-y-1">
+                <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
+                  {t.signupForm.labels.email}
+                </label>
+
+                <input 
+                  type="email" 
+                  placeholder={t.signupForm.placeholders.phone}
+                  className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm font-mono"
+                  required
+                />
+              </div>
+              
 
               {/* Field 4: Password */}
               <div className="space-y-1">
@@ -117,6 +106,7 @@ export default function ParentSignupPage() {
                   type="password" 
                   placeholder="••••••••"
                   className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm"
+                required
                 />
               </div>
 
@@ -129,6 +119,7 @@ export default function ParentSignupPage() {
                   type="password" 
                   placeholder="••••••••"
                   className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm"
+                required
                 />
               </div>
               {/* Legal Framework Terms Disclaimer Acknowledgement */}

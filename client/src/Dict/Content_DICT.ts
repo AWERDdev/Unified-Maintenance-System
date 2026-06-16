@@ -51,11 +51,13 @@ export const contentDict: Record<string, TranslationKeys> = {
         phone: "Official Mobile Number",
         password: "Account Access Password",
         confirmPassword: "Re-enter Security Password",
-        selectStaffType: "Select Personnel Classification Role"
+        selectStaffType: "Select Personnel Classification Role",
+        email:""
       },
       placeholders: {
         fullName: "e.g., Ahmed Mohamed Mansour",
-        phone: "e.g., 01xxxxxxxxx"
+        phone: "e.g., 01xxxxxxxxx",
+        email:""
       },
       disclaimer: "By confirming registration parameters, you certify that your identity matches the verified personnel register of the educational directorate.",
       submitBtn: "Initialize Secure Account Credentials",
@@ -125,11 +127,13 @@ export const contentDict: Record<string, TranslationKeys> = {
         phone: "رقم الهاتف المحمول المعتمد",
         password: "كلمة مرور الحساب الجديدة",
         confirmPassword: "إعادة تأكيد كلمة المرور المقترحة",
-        selectStaffType: "اختر الصفة الوظيفية للكادر الإداري"
+        selectStaffType: "اختر الصفة الوظيفية للكادر الإداري",
+        email:""
       },
       placeholders: {
         fullName: "مثال: أحمد محمد منصور",
-        phone: "مثال: ٠١xxxxxxxxx"
+        phone: "مثال: ٠١xxxxxxxxx",
+        email:""
       },
       disclaimer: "بالضغط على إنشاء الحساب، فإنك تقر بأنك موظف مقيد بقطاع التربية والتعليم وأن كافة البيانات المدخلة تطابق السجلات الرسمية للأحوال المدنية.",
       submitBtn: "إنشاء وتسجيل الحساب المعتمد",

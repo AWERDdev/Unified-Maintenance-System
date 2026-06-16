@@ -16,8 +16,12 @@ app.get('/', (req, res) => {
   res.json({ message: 'This is the root endpoint Speaking' });
 });
 
+const StaffSignup = require("./AUTH/Staff_AUTH_signUP")
 
+app.use("/auth",StaffSignup)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+//http://localhost:3500/

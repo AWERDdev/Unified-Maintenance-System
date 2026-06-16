@@ -20,11 +20,13 @@ export type TranslationKeys = {
       password: string;
       confirmPassword: string;
       selectStaffType:string;
+      email: string
 
     };
     placeholders: {
       fullName: string;
       phone: string;
+      email:string
     };
     disclaimer: string;
     submitBtn: string;
@@ -37,6 +39,7 @@ export type TranslationKeys = {
 
     };
     teacher_code:string;
+
   };
       // Add this inside your TranslationKeys type definition
 loginForm: {

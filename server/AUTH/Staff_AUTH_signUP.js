@@ -7,7 +7,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const signupschema = require("../middlewares/security_validation/schemas/signup")
+const signupschema = require("../middlewares/security_validation/schemas/auth_schema")
 const validate = require("../middlewares/security_validation/auth_input_validation")
 const Staff = require('../DB/models/Staff_model');
 

@@ -15,7 +15,10 @@ const signupSchema = z.object({
     // Stored as a string to preserve the leading '0' in mobile numbers
     phone: z.string({ required_error: "Phone number is required" })
         .min(10, { message: "Phone number is too short" })
-        .regex(/^\d+$/, { message: "Phone number must contain only numbers" })
+        .regex(/^\d+$/, { message: "Phone number must contain only numbers" }),
+        
+    staff_Type: z.string({ required_error: "staff type is required" })
+
 });
 
 const loginSchema = z.object({

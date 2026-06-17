@@ -1,16 +1,34 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
+const staffSchema = new mongoose.Schema({
+  national_id:{
+    type: String,
+    required:true,
+    unique:true,
+  },
+  legal_name:{
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+    
+  },
+  phone:{
+    type: String,
+    required: true,
+    unique: true,
+  },
   email: {
     type: String,
     required: true,
     unique: true,
     trim: true
   },
-  name: {
+  staff_Type:{
     type: String,
-    default: null
+    required: true,
+    trim: true  
   }
 }, { timestamps: true }); // Automatically handles createdAt and updatedAt for you
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('staff', staffSchema);

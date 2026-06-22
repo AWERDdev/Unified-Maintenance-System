@@ -5,13 +5,13 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const signupschema = require("../middlewares/security_validation/schemas/auth_schema");
+const {signupSchema} = require("../middlewares/security_validation/schemas/auth_schema");
 const validate = require("../middlewares/security_validation/auth_input_validation");
 const Staff = require('../DB/models/Staff_model');
 
 const JWT_SECRET = process.env.JWT_SECRET || "JWT_SECRET";
 
-router.post("/staff/signup", validate(signupschema), async (req, res) => {
+router.post("/staff/signup", validate(signupSchema), async (req, res) => {
     const { email } = req.body;
     
     // 1. Debug entry point

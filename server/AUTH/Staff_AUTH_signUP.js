@@ -11,7 +11,7 @@ const Staff = require('../DB/models/Staff_model');
 
 const JWT_SECRET = process.env.JWT_SECRET || "JWT_SECRET";
 
-router.post("/staff/signup", validate(signupSchema), async (req, res) => {
+router.post("/staff/signup", validate(signupSchema,"Staff signup"), async (req, res) => {
     const { email } = req.body;
     
     // 1. Debug entry point

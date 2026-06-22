@@ -8,7 +8,6 @@ const Staff = require('../DB/models/Staff_model');
 const { loginSchema } = require("../middlewares/security_validation/schemas/auth_schema");
 const validate = require("../middlewares/security_validation/auth_input_validation");
 
-// Note: Kept your typo 'JWT_SCERET' so it matches your .env if you configured it that way!
 const JWT_SECRET = process.env.JWT_SCERET || "JWT_SCERET";
 
 router.get('/', (req, res) => {
@@ -16,15 +15,14 @@ router.get('/', (req, res) => {
 });
 
 router.post("/staff/login", validate(loginSchema, "Staff Login"), async (req, res) => {
-    const { email } = req.body;
+    // Destructuring both fields up front makes your variable usage completely uniform
+    const { email, password } = req.body; 
     console.log(`[INFO] [${new Date().toISOString()}] Login attempt initiated for email: ${email}`);
 
     try {
-        const data = req.body;
-
         // 1. Find user in the database
         console.log(`[DEBUG] Querying database for user: ${email}`);
-        const user = await Staff.findOne({ email: data.email });
+        const user = await Staff.findOne({ email });
         
         if (!user) {
             console.warn(`[WARN] Login failed: User not found for email: ${email}`);
@@ -33,7 +31,7 @@ router.post("/staff/login", validate(loginSchema, "Staff Login"), async (req, re
 
         // 2. Verify password
         console.log(`[DEBUG] Verifying password for user: ${email}`);
-        const isPasswordMatch = await bcrypt.compare(data.password, user.password);
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
         
         if (!isPasswordMatch) {
             console.warn(`[WARN] Login failed: Incorrect password for email: ${email}`);

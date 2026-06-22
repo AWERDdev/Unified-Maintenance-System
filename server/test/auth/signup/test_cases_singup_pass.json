@@ -1,0 +1,16 @@
+[
+  {
+    "national_id": "29501012101234",
+    "legal_name": "Ahmed Mohamed",
+    "phone": "01023456789",
+    "email": "ahmed.mohamed@school.com",
+    "password": "SecurePassword123!"
+  },
+  {
+    "national_id": "29805120105678",
+    "legal_name": "Sarah Ali",
+    "phone": "01123456789",
+    "email": "sarah.ali@school.com",
+    "password": "AnotherPassword321!"
+  }
+]

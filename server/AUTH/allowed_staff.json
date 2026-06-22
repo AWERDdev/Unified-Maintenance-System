@@ -1,0 +1,52 @@
+[
+  {
+    "national_id": "27503150101234",
+    "legal_name": "Mahmoud Hassan",
+    "staff_Type": "Principal"
+  },
+  {
+    "national_id": "28011220104321",
+    "legal_name": "Nadia Abdelrahman",
+    "staff_Type": "Vice Principal"
+  },
+  {
+    "national_id": "29501012101234",
+    "legal_name": "Ahmed Mohamed",
+    "staff_Type": "Teacher"
+  },
+  {
+    "national_id": "29805120105678",
+    "legal_name": "Sarah Ali",
+    "staff_Type": "Administrator"
+  },
+  {
+    "national_id": "29108040209876",
+    "legal_name": "Tarek El-Sayed",
+    "staff_Type": "Teacher"
+  },
+  {
+    "national_id": "28810051403456",
+    "legal_name": "Mona Mansour",
+    "staff_Type": "School Counselor"
+  },
+  {
+    "national_id": "29904110107654",
+    "legal_name": "Omar Ibrahim",
+    "staff_Type": "IT Specialist"
+  },
+  {
+    "national_id": "28506250206543",
+    "legal_name": "Fatma El-Shami",
+    "staff_Type": "Librarian"
+  },
+  {
+    "national_id": "29312120108765",
+    "legal_name": "Hany Youssef",
+    "staff_Type": "Teacher Assistant"
+  },
+  {
+    "national_id": "27807190102345",
+    "legal_name": "Khaled Mustafa",
+    "staff_Type": "Academic Coordinator"
+  }
+]

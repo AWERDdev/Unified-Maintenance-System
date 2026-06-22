@@ -1,0 +1,11 @@
+[
+  {
+    "description": "FAIL CASE 1: Missing the password completely",
+    "email": "john.doe@company.com"
+  },
+  {
+    "description": "FAIL CASE 2: Invalid formatting structure for an email string, password too short",
+    "email": "not-an-email-address",
+    "password": "123"
+  }
+]

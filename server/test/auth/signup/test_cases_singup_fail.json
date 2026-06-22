@@ -1,0 +1,25 @@
+[
+  {
+    "description": "FAIL CASE 1: Valid structure but NOT in the whitelist JSON file",
+    "national_id": "29999999999999",
+    "legal_name": "John Doe Jenkins",
+    "phone": "01234567890",
+    "email": "john.jenkins@company.com",
+    "password": "SecurePassword123!"
+  },
+  {
+    "description": "FAIL CASE 2: Missing required field (national_id)",
+    "legal_name": "Jane Doe",
+    "phone": "01123456789",
+    "email": "jane.doe@company.com",
+    "password": "AnotherPassword321!"
+  },
+  {
+    "description": "FAIL CASE 3: Bad format inputs (short ID, bad phone regex, weak password, invalid email format)",
+    "national_id": "1234567890",
+    "legal_name": "Bad Payload Test",
+    "phone": "010-ABCD-123",
+    "email": "not-an-email",
+    "password": "short"
+  }
+]

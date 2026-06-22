@@ -1,30 +1,31 @@
 const { z } = require("zod");
 
 const validate = (schema, schemaName = "Unknown Schema") => (req, res, next) => {
+    // 1. Hard Safety Guard: Catch import/export casing bugs immediately
+    if (!schema || typeof schema.safeParse !== 'function') {
+        console.error(`[CRITICAL] Validation middleware received an invalid or undefined schema for: "${schemaName}". Check your require() or module.exports statement!`);
+        return res.status(500).json({ message: "Internal server configuration error" });
+    }
+
     console.log(`[DEBUG] [${new Date().toISOString()}] Initiating validation for: ${schemaName}`);
     
-    // .safeParse() returns an object: { success: true, data: ... } OR { success: false, error: ... }
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
-        // Zod guarantees result.error exists if success is false
-        const errorMessages = result.error.errors.map(err => ({
-            field: err.path.join('.'),
-            message: err.message
-        }));
+        // 2. Direct approach: Zod formats errors directly into an easy key-value object
+        const formattedErrors = result.error.format();
 
         console.warn(`[WARN] Validation failed for: ${schemaName}`);
-        console.warn(`[WARN] Total errors found: ${errorMessages.length}`);
-        console.dir(errorMessages, { depth: null });
+        console.dir(formattedErrors, { depth: null });
 
-        return res.status(422).json({ // Changed to 422 Unprocessable Entity
+        return res.status(422).json({
             status: "fail",
             message: "Validation failed",
-            errors: errorMessages
+            errors: formattedErrors // Returns raw, clean layout directly to frontend
         });
     }
 
-    // If validation passed, attach the clean data and move on
+    // Validation passed perfectly
     req.body = result.data;
     console.log(`[INFO] Validation passed successfully for: ${schemaName}`);
     return next();

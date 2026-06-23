@@ -19,7 +19,9 @@ const signupSchema = z.object({
 });
 
 const loginSchema = z.object({
-    email: z.string().email({ message: "Invalid email" }),
+        national_id: z.string()
+        .length(14, { message: "National ID must be exactly 14 digits long" })
+        .regex(/^\d+$/, { message: "National ID must contain only numbers" }),
     password: z.string().min(8, { message: "Password must be at least 8 characters long" })
 });
 

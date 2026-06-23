@@ -1,10 +1,12 @@
 [
   {
-    "email": "ahmed.mohamed@school.com",
+    "description": "PASS CASE 1: Valid Teacher login using their 14-digit National ID and correct password",
+    "national_id": "29501012101234",
     "password": "SecurePassword123!"
   },
   {
-    "email": "sarah.ali@school.com",
+    "description": "PASS CASE 2: Valid Administrator login using their 14-digit National ID and correct password",
+    "national_id": "29805120105678",
     "password": "AnotherPassword321!"
   }
 ]

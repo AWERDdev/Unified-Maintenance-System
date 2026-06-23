@@ -24,8 +24,10 @@ app.get('/', (req, res) => {
 });
 
 const StaffSignup = require("./AUTH/Staff_AUTH_signUP");
-app.use("/auth", StaffSignup);
+const StaffLogin = require("./AUTH/Staff_Auth_logIN")
 
+app.use("/auth", StaffSignup);
+app.use("/auth", StaffLogin)
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

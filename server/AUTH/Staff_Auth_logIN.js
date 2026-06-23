@@ -15,35 +15,38 @@ router.get('/', (req, res) => {
 });
 
 router.post("/staff/login", validate(loginSchema, "Staff Login"), async (req, res) => {
-    // Destructuring both fields up front makes your variable usage completely uniform
-    const { email, password } = req.body; 
-    console.log(`[INFO] [${new Date().toISOString()}] Login attempt initiated for email: ${email}`);
+    const { national_id, password } = req.body; 
+    console.log(`[INFO] [${new Date().toISOString()}] Login attempt initiated for national_id: ${national_id}`);
 
     try {
         // 1. Find user in the database
-        console.log(`[DEBUG] Querying database for user: ${email}`);
-        const user = await Staff.findOne({ email });
+        console.log(`[DEBUG] Querying database for user: ${national_id}`);
+        const user = await Staff.findOne({ national_id }).select("+password");
         
         if (!user) {
-            console.warn(`[WARN] Login failed: User not found for email: ${email}`);
-            return res.status(401).json({ message: "Invalid email or password" });
+            // FIXED: Since 'user' doesn't exist here, use the input 'national_id' for this log
+            console.warn(`[WARN] Login failed: User not found for national_id: ${national_id}`);
+            return res.status(401).json({ message: "Invalid National ID or password" });
         }
 
         // 2. Verify password
-        console.log(`[DEBUG] Verifying password for user: ${email}`);
+        // FIXED: Changed 'email' to 'user.email'
+        console.log(`[DEBUG] Verifying password for user: ${user.email}`);
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         
         if (!isPasswordMatch) {
-            console.warn(`[WARN] Login failed: Incorrect password for email: ${email}`);
-            return res.status(401).json({ message: "Invalid email or password" });
+            // FIXED: Changed 'email' to 'user.email'
+            console.warn(`[WARN] Login failed: Incorrect password for email: ${user.email}`);
+            return res.status(401).json({ message: "Invalid National ID or password" });
         }
 
         // 3. Generate JWT Token
-        console.log(`[DEBUG] Generating JWT token for user: ${email}`);
+        // This is perfectly fine! Emails are great for JWT payloads
+        console.log(`[DEBUG] Generating JWT token for user: ${user.email}`);
         const token = await jwt.sign({ email: user.email }, JWT_SECRET, { expiresIn: "1h" });
 
         // 4. Send cookie to frontend
-        console.log(`[DEBUG] Setting authentication cookie for user: ${email}`);
+        console.log(`[DEBUG] Setting authentication cookie for user: ${user.email}`);
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
@@ -51,11 +54,12 @@ router.post("/staff/login", validate(loginSchema, "Staff Login"), async (req, re
             maxAge: 60 * 60 * 1000 // 1 hour
         });
 
-        console.log(`[INFO] Login process completed successfully for user: ${email}`);
+        console.log(`[INFO] Login process completed successfully for user: ${user.email}`);
         return res.status(200).json({ message: "Login successful" });
 
     } catch (error) {
-        console.error(`[ERROR] [${new Date().toISOString()}] Login failed for email: ${email}`);
+        // FIXED: Changed to generic error log or fallback to prevent undefined variable crash
+        console.error(`[ERROR] [${new Date().toISOString()}] Login failed status.`);
         console.error(`[ERROR] Error Message: ${error.message}`);
         console.error(`[ERROR] Full Stack Trace:\n`, error.stack);
         

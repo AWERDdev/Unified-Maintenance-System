@@ -1,11 +1,16 @@
 [
   {
-    "description": "FAIL CASE 1: Missing the password completely",
-    "email": "john.doe@company.com"
+    "description": "FAIL CASE 1: Missing the password property completely",
+    "national_id": "29501012101234"
   },
   {
-    "description": "FAIL CASE 2: Invalid formatting structure for an email string, password too short",
-    "email": "not-an-email-address",
+    "description": "FAIL CASE 2: Invalid formatting structure (National ID is too short and password does not meet minimum length requirement)",
+    "national_id": "12345",
     "password": "123"
+  },
+  {
+    "description": "FAIL CASE 3: National ID contains letters instead of numbers only",
+    "national_id": "2950101ABC5678",
+    "password": "SecurePassword123!"
   }
 ]

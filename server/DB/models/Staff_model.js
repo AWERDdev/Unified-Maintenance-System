@@ -24,6 +24,12 @@ const staffSchema = new mongoose.Schema({
     unique: true,
     trim: true
   },
+password: {
+  type: String,
+  required: true,
+  select: false, // <-- CRITICAL FOR SECURITY
+  minlength: 8,  // <-- Basic validation safety net
+},
   staff_Type:{
     type: String,
     required: true,
@@ -31,4 +37,4 @@ const staffSchema = new mongoose.Schema({
   }
 }, { timestamps: true }); // Automatically handles createdAt and updatedAt for you
 
-module.exports = mongoose.model('staff', staffSchema);
+module.exports = mongoose.model('staff', staffSchema, 'staff');

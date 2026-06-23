@@ -6,7 +6,7 @@ const authLimiter = rateLimit({
   // Read from .env, fallback to a strict 15 minutes if missing
   windowMs: parseInt(process.env.AUTH_WINDOW_MS) || 15 * 60 * 1000, 
   // Read from .env, fallback to a strict 5 attempts if missing
-  max: parseInt(process.env.AUTH_MAX_REQUESTS) || 5, 
+  max: parseInt(process.env.AUTH_MAX_REQUESTS) || 6, 
   standardHeaders: true,
   legacyHeaders: false,
   message: { 

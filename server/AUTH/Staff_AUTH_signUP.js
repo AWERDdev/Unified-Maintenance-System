@@ -6,12 +6,14 @@ const jwt = require('jsonwebtoken');
 const validate = require("../middlewares/security_validation/auth_input_validation")
 const {signupSchema} = require("../middlewares/security_validation/schemas/auth_schema")
 const Staff = require('../DB/models/Staff_model');
+const {authLimiter} = require("../middlewares/rate_limiter/rate_limiter")
+
 // Load the mock whitelist data from the JSON file
 const whitelist = require('./allowed_staff.json'); 
 
 const JWT_SECRET = process.env.JWT_SECRET || "JWT_SECRET";
 
-router.post("/staff/signup",validate(signupSchema, "Staff Signup"),  async (req, res) => {
+router.post("/staff/signup",authLimiter,validate(signupSchema, "Staff Signup"),  async (req, res) => {
     const data = req.body; // Cleaner approach, good catch!
     
     console.log(`[INFO] Signup attempt initiated for national ID: ${data.national_id}`);

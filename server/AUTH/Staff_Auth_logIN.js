@@ -8,13 +8,10 @@ const Staff = require('../DB/models/Staff_model');
 const { loginSchema } = require("../middlewares/security_validation/schemas/auth_schema");
 const validate = require("../middlewares/security_validation/auth_input_validation");
 
-const JWT_SECRET = process.env.JWT_SCERET || "JWT_SCERET";
+const JWT_SECRET = process.env.JWT_SECRET || "JWT_SECRET";
+const {authLimiter} = require("../middlewares/rate_limiter/rate_limiter")
 
-router.get('/', (req, res) => {
-    res.json({ message: 'This is the Parent Authentication endpoint Speaking' });
-});
-
-router.post("/staff/login", validate(loginSchema, "Staff Login"), async (req, res) => {
+router.post("/staff/login",authLimiter, validate(loginSchema, "Staff Login"), async (req, res) => {
     const { national_id, password } = req.body; 
     console.log(`[INFO] [${new Date().toISOString()}] Login attempt initiated for national_id: ${national_id}`);
 

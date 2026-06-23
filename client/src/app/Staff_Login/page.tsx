@@ -5,32 +5,92 @@ import { NavBarNoOptions } from "@/components/Navbar";
 import { useLanguage } from "@/tools/LanguageHandler";
 import { contentDict } from "@/Dict/Content_DICT";
 import { Fotter2 } from "@/components/Fotter";
+import { useState } from "react";
+import { validate_login_data } from "@/tools/Form_validation"; // Adjust your import path accordingly
 
-export default function ParentLoginPage() {
+export default function StaffLoginPage() {
+  const [national_id, setNationalId] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const { lang } = useLanguage();
   const router = useRouter();
 
-  // Safely fallback to English strings if lang is undefined
   const t = contentDict[lang] || contentDict.en;
   const isRTL = lang === 'ar';
+
+  const request_login = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage("");
+
+    const formData = { national_id, password };
+    const validation = validate_login_data(formData, lang);
+
+    if (!validation.isValid) {
+      setErrorMessage(validation.message);
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/staff/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const resData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(resData.message || "Invalid credentials.");
+      }
+
+      router.push(ROUTES.Main_Page);
+
+    } catch (error: unknown) {
+  console.error(`[FRONTEND AUTH ERROR]: ${error}`);
+  
+  const defaultError = lang === 'ar' 
+    ? "فشل في العملية، يرجى المحاولة مرة أخرى لاحقاً" 
+    : "Authentication failed, please try again later.";
+
+  if (error instanceof Error) {
+    // If the error message looks like a stringified JSON array (common with Zod validation dumps)
+    if (error.message.startsWith('[')) {
+      try {
+        const parsedZod = JSON.parse(error.message);
+        // Grab the first validation error message from the array
+        setErrorMessage(parsedZod[0]?.message || defaultError);
+      } catch {
+        setErrorMessage(error.message);
+      }
+    } else {
+      // Standard backend rejection message (e.g., "Invalid National ID or password")
+      setErrorMessage(error.message);
+    }
+  } else {
+    setErrorMessage(defaultError);
+  }
+} finally {
+  setLoading(false);
+}
+  };
 
   return (
     <>
       <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
         
-        {/* 1. Portal Navigation Header Bar */}
         <header className="w-full sticky top-0 z-50">
           <NavBarNoOptions />
         </header>
 
-        {/* 2. Centralized Gateway Authentication Frame */}
         <main className="grow flex items-center justify-center px-4 py-12 md:py-20">
           <div className="bg-white w-full max-w-md rounded-lg shadow-md border border-[#E8ECEF] overflow-hidden">
             
-            {/* Top Identity Accent Stripe */}
             <div className="h-2 bg-[#0B2545]" />
 
-            {/* Form Headline Header Context */}
             <div className="p-6 md:p-8 text-center border-b border-[#F4F6F9]">
               <h1 className="text-2xl md:text-3xl font-bold text-[#0B2545] tracking-tight mb-2">
                 {t.nav.login}
@@ -40,19 +100,27 @@ export default function ParentLoginPage() {
               </p>
             </div>
 
-            {/* Static Interactive Form Sheet */}
-            <form className="p-6 md:p-8 space-y-5 text-start" onSubmit={(e) => e.preventDefault()}>
+            {errorMessage && (
+              <div className="mx-6 md:mx-8 mt-4 p-3 bg-red-50 border-s-4 border-red-500 text-red-700 text-sm rounded">
+                {errorMessage}
+              </div>
+            )}
+
+            <form className="p-6 md:p-8 space-y-5 text-start" onSubmit={request_login}>
               
-              {/* Field 1: Parent National ID */}
+              {/* Field 1: National ID */}
               <div className="space-y-1.5">
                 <label className="block text-xs font-bold uppercase tracking-wide text-[#13315C]">
                   {t.loginForm.labels.nationalId}
                 </label>
                 <input 
                   type="text" 
+                  value={national_id}
+                  onChange={(e) => setNationalId(e.target.value)}
                   maxLength={14}
                   placeholder="2950101210xxxx"
                   className="w-full px-4 py-2.5 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm font-mono tracking-wider"
+                  required
                 />
               </div>
 
@@ -63,12 +131,14 @@ export default function ParentLoginPage() {
                 </label>
                 <input 
                   type="password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className="w-full px-4 py-2.5 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm"
+                  required
                 />
               </div>
 
-              {/* Auxiliary Form Utilities (Remember Me / Forgot Password) */}
               <div className="flex items-center justify-between text-xs pt-1">
                 <label className="flex items-center gap-2 cursor-pointer text-[#4A5568]">
                   <input type="checkbox" className="w-4 h-4 cursor-pointer accent-[#0B2545] rounded" />
@@ -80,16 +150,14 @@ export default function ParentLoginPage() {
                 </a>
               </div>
 
-              {/* Form Submission Action Dispatcher Button */}
               <button 
                 type="submit"
-                className="w-full bg-[#0B2545] hover:bg-[#13315C] text-white font-bold py-3 px-4 rounded-lg transition-all text-sm cursor-pointer shadow-sm"
-                onClick={()=>{router.push(ROUTES.Main_Page)}}
+                disabled={loading}
+                className="w-full bg-[#0B2545] hover:bg-[#13315C] disabled:bg-[#4A5568] text-white font-bold py-3 px-4 rounded-lg transition-all text-sm cursor-pointer shadow-sm"
               >
-                {t.loginForm.submitBtn}
+                {loading ? (lang === 'ar' ? "جاري تسجيل الدخول..." : "Logging in...") : t.loginForm.submitBtn}
               </button>
 
-              {/* Secondary Navigation Redirect Link */}
               <div className="text-center pt-3 border-t border-[#F4F6F9]">
                 <p className="text-xs text-[#4A5568] leading-normal">
                   {t.loginForm.noAccount}
@@ -106,7 +174,6 @@ export default function ParentLoginPage() {
           </div>
         </main>
 
-        {/* 3. Standard Framework System Footer */}
         <Fotter2 />
       </div>
     </>

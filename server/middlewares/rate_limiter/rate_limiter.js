@@ -1,3 +1,4 @@
+require("dotenv").config();
 const rateLimit = require('express-rate-limit');
 
 // 1. HIGH SECURITY LIMITER (Login, Signup)
@@ -9,7 +10,7 @@ const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { 
-    message: "Too many authentication attempts. Please try again later." 
+    message: process.env.MESSAGE_AUTH || "Too many authentication attempts. Please try again later." 
   }
 });
 
@@ -18,11 +19,11 @@ const generalLimiter = rateLimit({
   // Read from .env, fallback to 5 minutes if missing
   windowMs: parseInt(process.env.GEN_WINDOW_MS) || 5 * 60 * 1000, 
   // Read from .env, fallback to 100 requests if missing
-  max: parseInt(process.env.GEN_MAX_REQUESTS) || 100, 
+  max: parseInt(process.env.GEN_MAX_REQUESTS) || 5, 
   standardHeaders: true,
   legacyHeaders: false,
   message: { 
-    message: "Calm down, you are sending requests too quickly!" 
+    message: process.env.MESSAGE_GENERAL || "too many requests sent try again later" 
   }
 });
 

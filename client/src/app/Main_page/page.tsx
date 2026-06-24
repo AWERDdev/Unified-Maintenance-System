@@ -1,10 +1,10 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "@/tools/LanguageHandler";
 import { contentDict } from "@/Dict/Content_DICT";
 import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
-
+import { isAUTH } from "@/tools/verfiy_user,";
 // Mock Data representing localized school asset tickets
 const initialTickets = [
   { id: "TK-9402", asset: "مكتب معمل الحاسب الآلي", room: "Lab A", category: "Infrastructure", status: "Pending", date: "2026-06-14", arCategory: "بنية تحتية" },
@@ -16,7 +16,25 @@ export default function MainPage() {
   const { lang } = useLanguage();
   const isRTL = lang === 'ar';
   const [tickets] = useState(initialTickets);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const checkUser = async () => {
+      const authStatus = await isAUTH();
+      
+      if (!authStatus.authenticated) {
+        // If the tool says false, instantly kick them to sign up
+        window.location.href = '/signup'; 
+      } else {
+        // Otherwise, turn off the loading state and let them see the page
+        setLoading(false);
+      }
+    };
+
+    checkUser();
+  }, []);
+
+if (loading) return <div>Checking permissions...</div>;
   return (
     <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
       {/* Header */}

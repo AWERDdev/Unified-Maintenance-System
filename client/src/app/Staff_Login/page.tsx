@@ -35,7 +35,7 @@ export default function StaffLoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("/api/staff/login", {
+      const response = await fetch("http://localhost:3500/auth/staff/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)

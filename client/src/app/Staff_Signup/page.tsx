@@ -32,23 +32,32 @@ export default function StaffSignupPage() {
     e.preventDefault(); // Prevents page reload
     setErrorMessage(""); 
     
+    // Check if passwords match before running logic
+    if (password !== confirmPassword) {
+      const matchError = lang === 'ar' 
+        ? "تأكيد كلمة المرور غير متطابق" 
+        : "Passwords do not match.";
+      setErrorMessage(matchError);
+      return;
+    }
+
     // Gather your state values into an object
-  const formData = { legal_name, national_id, phone, email, password };
+    const formData = { legal_name, national_id, phone, email, password };
 
-  // Run the validation block
-  const validation = validate_signup_data(formData, lang);
+    // Run the validation block
+    const validation = validate_signup_data(formData, lang);
 
-  // If client-side validation catches an error, stop immediately and show it
-  if (!validation.isValid) {
-    setErrorMessage(validation.message);
-    return;
-  }
+    // If client-side validation catches an error, stop immediately and show it
+    if (!validation.isValid) {
+      setErrorMessage(validation.message);
+      return;
+    }
 
     setLoading(true);
 
     try {
-      // Connect to your absolute backend signup route URI
-      const response = await fetch("/api/staff/signup", {
+      // NOTE: If your express server runs on port 5000, update this URL to: "http://localhost:3500/api/staff/signup"
+      const response = await fetch("http://localhost:3500/auth/staff/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -60,44 +69,50 @@ export default function StaffSignupPage() {
         })
       });
 
-      const resData = await response.json();
+      // Safely inspect the response content-type to handle 404/500 HTML fallbacks safely
+      const contentType = response.headers.get("content-type");
+      let resData;
+      
+      if (contentType && contentType.includes("application/json")) {
+        resData = await response.json();
+      } else {
+        // Handled fallback if backend serves non-JSON string errors
+        throw new Error(lang === 'ar' ? "فشل الاتصال بالخادم الداخلي" : "Unable to reach database architecture pipeline.");
+      }
 
       if (!response.ok) {
-        // If the backend returns a custom message (like whitelist errors), use it, 
-        // otherwise default to the classic "failed to signup try again later" format
+        // Use custom whitelist/validation messages from backend if provided
         throw new Error(resData.message || "Failed to signup. Please try again later.");
       }
 
       // Route to your platform main lander upon successful profile save
       router.push(ROUTES.Main_Page);
 
-   } catch (error: unknown) {
-  console.error(`[FRONTEND AUTH ERROR]: ${error}`);
-  
-  const defaultError = lang === 'ar' 
-    ? "فشل في العملية، يرجى المحاولة مرة أخرى لاحقاً" 
-    : "Authentication failed, please try again later.";
+    } catch (error: unknown) {
+      console.error(`[FRONTEND AUTH ERROR]: ${error}`);
+      
+      const defaultError = lang === 'ar' 
+        ? "فشل في العملية، يرجى المحاولة مرة أخرى لاحقاً" 
+        : "Authentication failed, please try again later.";
 
-  if (error instanceof Error) {
-    // If the error message looks like a stringified JSON array (common with Zod validation dumps)
-    if (error.message.startsWith('[')) {
-      try {
-        const parsedZod = JSON.parse(error.message);
-        // Grab the first validation error message from the array
-        setErrorMessage(parsedZod[0]?.message || defaultError);
-      } catch {
-        setErrorMessage(error.message);
+      if (error instanceof Error) {
+        // Handle stringified backend Zod error structures cleanly
+        if (error.message.startsWith('[')) {
+          try {
+            const parsedZod = JSON.parse(error.message);
+            setErrorMessage(parsedZod[0]?.message || defaultError);
+          } catch {
+            setErrorMessage(error.message);
+          }
+        } else {
+          setErrorMessage(error.message);
+        }
+      } else {
+        setErrorMessage(defaultError);
       }
-    } else {
-      // Standard backend rejection message (e.g., "Invalid National ID or password")
-      setErrorMessage(error.message);
+    } finally {
+      setLoading(false);
     }
-  } else {
-    setErrorMessage(defaultError);
-  }
-} finally {
-  setLoading(false);
-}
   };
 
   return (
@@ -105,7 +120,7 @@ export default function StaffSignupPage() {
       <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
         
         {/* 1. Portal Navigation Header Bar */}
-        <header className="w-full sticky top-0 z-50">
+        <header className="w-full top-0 z-50">
           <NavBarNoOptions />
         </header>
 
@@ -191,7 +206,7 @@ export default function StaffSignupPage() {
                   type="email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder={t.signupForm.placeholders.phone}
+                  placeholder={t.signupForm.placeholders.email}
                   className="w-full px-4 py-2 rounded border border-[#E8ECEF] focus:outline-none focus:border-[#C5A880] bg-[#F4F6F9] text-sm font-mono"
                   required
                 />

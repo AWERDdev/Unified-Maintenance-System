@@ -1,6 +1,6 @@
 // 1. Define a strict TypeScript type for your translations structure
 export type TranslationKeys = {
-  nav: { signup: string; login: string; about: string };
+  nav: { signup: string; login: string; about: string; profile:string; };
   hero: { title: string; subtitle: string; getStarted: string; learnMore: string };
   footer: { rights: string };
   aboutTitle: string;

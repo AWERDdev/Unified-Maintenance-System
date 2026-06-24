@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useLanguage } from "@/tools/LanguageHandler";
 import { contentDict } from "@/Dict/Content_DICT";
-import { NavBar } from "@/components/Navbar";
+import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
 
 // Mock Data representing localized school asset tickets
@@ -21,7 +21,7 @@ export default function MainPage() {
     <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
       {/* Header */}
       <header className="w-full sticky top-0 z-50">
-        <NavBar />
+        <NavBarAUTH />
       </header>
 
       {/* Main Dashboard Control Container */}

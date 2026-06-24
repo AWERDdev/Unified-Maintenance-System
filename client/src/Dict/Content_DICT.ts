@@ -22,7 +22,8 @@ export const contentDict: Record<string, TranslationKeys> = {
     nav: { 
       signup: "Staff Registration", 
       login: "Staff Portal Login", 
-      about: "Platform Architecture" 
+      about: "Platform Architecture",
+      profile: "Personnel Profile Data"
     },
     
     // 2. Landing Frame Hero Interface
@@ -52,12 +53,12 @@ export const contentDict: Record<string, TranslationKeys> = {
         password: "Account Access Password",
         confirmPassword: "Re-enter Security Password",
         selectStaffType: "Select Personnel Classification Role",
-        email:""
+        email: "Official Ministry Email Address"
       },
       placeholders: {
         fullName: "e.g., Ahmed Mohamed Mansour",
         phone: "e.g., 01xxxxxxxxx",
-        email:""
+        email: "username@moe.edu.eg"
       },
       disclaimer: "By confirming registration parameters, you certify that your identity matches the verified personnel register of the educational directorate.",
       submitBtn: "Initialize Secure Account Credentials",
@@ -98,7 +99,8 @@ export const contentDict: Record<string, TranslationKeys> = {
     nav: { 
       signup: "تسجيل الموظفين والإداريين", 
       login: "بوابة دخول الكادر الإداري", 
-      about: "مواصفات المنظومة الرقمية" 
+      about: "مواصفات المنظومة الرقمية",
+      profile: "الملف الشخصي للموظف"
     },
     
     // 2. واجهة العرض الرئيسية للمنصة
@@ -128,12 +130,12 @@ export const contentDict: Record<string, TranslationKeys> = {
         password: "كلمة مرور الحساب الجديدة",
         confirmPassword: "إعادة تأكيد كلمة المرور المقترحة",
         selectStaffType: "اختر الصفة الوظيفية للكادر الإداري",
-        email:""
+        email: "البريد الإلكتروني الوزاري المعتمد"
       },
       placeholders: {
         fullName: "مثال: أحمد محمد منصور",
         phone: "مثال: ٠١xxxxxxxxx",
-        email:""
+        email: "username@moe.edu.eg"
       },
       disclaimer: "بالضغط على إنشاء الحساب، فإنك تقر بأنك موظف مقيد بقطاع التربية والتعليم وأن كافة البيانات المدخلة تطابق السجلات الرسمية للأحوال المدنية.",
       submitBtn: "إنشاء وتسجيل الحساب المعتمد",

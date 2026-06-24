@@ -45,7 +45,8 @@ router.post("/staff/signup",authLimiter,validate(signupSchema, "Staff Signup"), 
         const newStaff = new Staff({
             ...data,
             password: hashed_password,
-            staff_Type: whitelistedUser.staff_Type 
+            staff_Type: whitelistedUser.staff_Type,
+            school: whitelistedUser.school
         });
         
         await newStaff.save();

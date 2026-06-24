@@ -34,6 +34,11 @@ password: {
     type: String,
     required: true,
     trim: true  
+  },
+  school:{
+    type: String,
+    require: true,
+    trim: true
   }
 }, { timestamps: true }); // Automatically handles createdAt and updatedAt for you
 

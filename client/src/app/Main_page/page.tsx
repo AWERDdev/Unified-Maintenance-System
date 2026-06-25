@@ -7,10 +7,44 @@ import { Fotter1 } from "@/components/Fotter";
 import { isAUTH } from "@/tools/verfiy_user,";
 // Mock Data representing localized school asset tickets
 const initialTickets = [
-  { id: "TK-9402", asset: "مكتب معمل الحاسب الآلي", room: "Lab A", category: "Infrastructure", status: "Pending", date: "2026-06-14", arCategory: "بنية تحتية" },
-  { id: "TK-8831", asset: "جهاز عرض الإسقاط (Projector)", room: "Room 302", category: "Hardware", status: "In Progress", date: "2026-06-12", arCategory: "أجهزة برمجية" },
-  { id: "TK-7429", asset: "إضاءة غرفة الاختبارات الرئيسية", room: "Main Hall", category: "Electrical", status: "Resolved", date: "2026-06-10", arCategory: "كهرباء" },
+  { 
+    id: "TK-9402", 
+    asset: "مكتب معمل الحاسب الآلي", 
+    room: "Lab A", 
+    category: "Infrastructure", 
+    status: "Pending", 
+    date: "2026-06-14", 
+    arCategory: "بنية تحتية",
+    adminApproved: false,
+    principalFunded: false,
+    cost: 1500
+  },
+  { 
+    id: "TK-8831", 
+    asset: "جهاز عرض الإسقاط (Projector)", 
+    room: "Room 302", 
+    category: "Hardware", 
+    status: "In Progress", 
+    date: "2026-06-12", 
+    arCategory: "أجهزة برمجية",
+    adminApproved: true,
+    principalFunded: false,
+    cost: 4200
+  },
+  { 
+    id: "TK-7429", 
+    asset: "إضاءة غرفة الاختبارات الرئيسية", 
+    room: "Main Hall", 
+    category: "Electrical", 
+    status: "Resolved", 
+    date: "2026-06-10", 
+    arCategory: "كهرباء",
+    adminApproved: true,
+    principalFunded: true,
+    cost: 600
+  },
 ];
+
 
 export default function MainPage() {
   const { lang } = useLanguage();

@@ -1,14 +1,12 @@
+import { TeacherViewProps } from "@/Types/tickets";
 
-export const  TeacherView = ({ tickets, isRTL }: { tickets:any[], isRTL: boolean }) => {
+export const TeacherView = ({ tickets, isRTL }: TeacherViewProps) => {
   return (
-    <div className="bg-white rounded-xl border border-[#E8ECEF] shadow-sm overflow-hidden">
-      <div className="p-5 border-b border-[#F4F6F9] bg-slate-50">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-[#13315C]">
-          {isRTL ? "بلاغات الأعطال الخاصة بك" : "My Filed Classroom Requests"}
-        </h2>
-      </div>
+    <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
+      {/* ... Your JSX remains exactly the same ... */}
       <div className="overflow-x-auto">
         <table className="w-full text-start border-collapse text-sm">
+          {/* Table Headers */}
           <thead>
             <tr className="bg-white text-[#4A5568] border-b border-[#E8ECEF] text-xs font-bold uppercase tracking-wider">
               <th className="px-6 py-4 text-start">{isRTL ? "كود البلاغ" : "Ticket ID"}</th>
@@ -19,6 +17,7 @@ export const  TeacherView = ({ tickets, isRTL }: { tickets:any[], isRTL: boolean
               <th className="px-6 py-4 text-start">{isRTL ? "الحالة الإجمالية" : "Overall Status"}</th>
             </tr>
           </thead>
+          {/* Table Body */}
           <tbody className="divide-y divide-[#F4F6F9]">
             {tickets.map((ticket) => (
               <tr key={ticket.id} className="hover:bg-slate-50 transition-colors">
@@ -49,4 +48,4 @@ export const  TeacherView = ({ tickets, isRTL }: { tickets:any[], isRTL: boolean
       </div>
     </div>
   );
-}
+};

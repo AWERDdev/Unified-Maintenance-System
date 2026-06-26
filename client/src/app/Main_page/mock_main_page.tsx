@@ -1,11 +1,20 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "@/tools/LanguageHandler";
+import { contentDict } from "@/Dict/Content_DICT";
 import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
+import { isAUTH } from "@/tools/verfiy_user,";
+import { Ticket } from "@/Types/tickets";
 
-// Updated Mock Data with explicit technical and funding step tracking
-const initialTickets = [
+// 1. Importing your modular dashboard views
+// Adjust paths based on your actual file architecture
+import { TeacherView } from "@/components/Teacher_view";
+import { AdminView } from "@/components/Admin_view";
+import { PrincipalView } from "@/components/PrincipalFunding_View";
+
+// Localized school asset data setup inside localized state tracking
+const initialTickets: Ticket[]= [
   { 
     id: "TK-9402", 
     asset: "مكتب معمل الحاسب الآلي", 
@@ -48,74 +57,81 @@ export default function MainPage() {
   const { lang } = useLanguage();
   const isRTL = lang === 'ar';
   
-  // Simulated State for Testing (In production, populate this from your National ID Auth context)
-  const [userRole, setUserRole] = useState<"teacher" | "admin" | "principal">("principal");
+  // Set up tickets state so updates reflect instantly in metric cards
   const [tickets, setTickets] = useState(initialTickets);
+  const [loading, setLoading] = useState(true);
 
-  // Status Handlers
-  const handleAdminApprove = (id: string) => {
-    setTickets(prev => prev.map(t => t.id === id ? { ...t, adminApproved: true, status: t.principalFunded ? "In Progress" : "Pending" } : t));
-  };
+  // 2. State management for the user profile routing rule
+  // Valid roles: 'teacher' | 'admin' | 'principal'
+  const [staffType, setStaffType] = useState<"teacher" | "admin" | "principal">("teacher");
 
-  const handlePrincipalFund = (id: string) => {
-    setTickets(prev => prev.map(t => t.id === id ? { ...t, principalFunded: true, status: t.adminApproved ? "In Progress" : "Pending" } : t));
-  };
+  useEffect(() => {
+    const checkUser = async () => {
+      const authStatus = await isAUTH();
+      
+      if (!authStatus.authenticated) {
+        window.location.href = '/signup'; 
+      } else {
+        // NOTE: Once you implement your role fetching logic, hook it up here:
+        // if (authStatus.staffType) setStaffType(authStatus.staffType);
+        
+        setLoading(false);
+      }
+    };
+
+    checkUser();
+  }, []);
+
+  // 3. Dynamic metric computations based on the reactive state array
+  const pendingCount = tickets.filter(t => t.status === 'Pending').length;
+  const inProgressCount = tickets.filter(t => t.status === 'In Progress').length;
+  const resolvedCount = tickets.filter(t => t.status === 'Resolved').length;
+
+  if (loading) return <div>Checking permissions...</div>;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
+      {/* Header */}
       <header className="w-full sticky top-0 z-50">
         <NavBarAUTH />
       </header>
 
-      {/* Role Switcher Toolbar for Development Testing */}
-      <div className="bg-slate-800 text-white p-2 text-xs flex gap-4 justify-center items-center">
-        <span>Dev Role Switcher:</span>
-        <button onClick={() => setUserRole("teacher")} className={`px-2 py-0.5 rounded ${userRole === 'teacher' ? 'bg-blue-600' : 'bg-slate-600'}`}>Teacher</button>
-        <button onClick={() => setUserRole("admin")} className={`px-2 py-0.5 rounded ${userRole === 'admin' ? 'bg-blue-600' : 'bg-slate-600'}`}>Admin</button>
-        <button onClick={() => setUserRole("principal")} className={`px-2 py-0.5 rounded ${userRole === 'principal' ? 'bg-blue-600' : 'bg-slate-600'}`}>Principal</button>
-      </div>
-
+      {/* Main Dashboard Control Container */}
       <main className="grow max-w-7xl w-full mx-auto px-4 py-8 md:py-12 space-y-8">
         
-        {/* Dynamic Title Context based on Role */}
+        {/* Dashboard Title & Meta Context */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-[#E8ECEF] pb-6 gap-4">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-[#0B2545]">
-              {isRTL ? "لوحة التحكم الموحدة للصيانة" : "Unified School Maintenance Terminal"}
-              <span className="text-sm font-normal text-slate-500 block mt-1">
-                {userRole === "teacher" && (isRTL ? "منصة المعلم: تقديم البلاغات ومتابعتها" : "Teacher Workspace: Request and Tracking")}
-                {userRole === "admin" && (isRTL ? "منصة الفحص الفني: مراجعة واعتماد البلاغات" : "Technical Admin Workspace: Inspection & Engineering Approvals")}
-                {userRole === "principal" && (isRTL ? "منصة الإدارة العليا: الميزانية والاعتماد النهائي" : "Principal Workspace: Budgetary Funding & Executive Final Sign-off")}
-              </span>
+              {isRTL ? "لوحة التحكم في بلاغات صيانة المنشآت" : "Facility Maintenance Escalation Terminal"}
             </h1>
+            <p className="text-sm text-[#4A5568] mt-1">
+              {isRTL ? "إدارة وتتبع أعطال البنية التحتية والأجهزة داخل المدرسة" : "Track structural failures and hardware ticket lifecycles"}
+            </p>
           </div>
           
-          {/* Teachers can file tickets directly */}
-          {userRole === "teacher" && (
+          {/* Action Trigger for adding a ticket (Hidden for Admins who only review) */}
+          {staffType !== "admin" && (
             <button className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto">
               {isRTL ? "+ تسجيل بلاغ عطل جديد" : "+ File New Asset Ticket"}
             </button>
           )}
         </div>
 
-        {/* Unified Status Counter Cards Grid */}
+        {/* Executive Metric Cards Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "البلاغات المعلقة" : "Pending Action"}</p>
-              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">
-                {tickets.filter(t => !t.adminApproved || !t.principalFunded).length}
-              </h3>
+              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">{pendingCount}</h3>
             </div>
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
           </div>
 
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "تحت الصيانة (معتمد بالكامل)" : "Under Maintenance"}</p>
-              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">
-                {tickets.filter(t => t.adminApproved && t.principalFunded && t.status !== "Resolved").length}
-              </h3>
+              <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "قيد الإصلاح" : "Under Maintenance"}</p>
+              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">{inProgressCount}</h3>
             </div>
             <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
           </div>
@@ -123,20 +139,30 @@ export default function MainPage() {
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "تمت صيانته" : "Resolved Items"}</p>
-              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">
-                {tickets.filter(t => t.status === "Resolved").length}
-              </h3>
+              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">{resolvedCount}</h3>
             </div>
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
           </div>
         </div>
 
-        {/* Context-Specific Module Injection */}
-        {userRole === "teacher" && <TeacherView tickets={tickets} isRTL={isRTL} />}
-        {userRole === "admin" && <AdminInspectionView tickets={tickets} onApprove={handleAdminApprove} isRTL={isRTL} />}
-        {userRole === "principal" && <c tickets={tickets} onFund={handlePrincipalFund} isRTL={isRTL} />}
+        {/* 4. Conditional Sub-Component Router Interface Segment */}
+        <div className="w-full mt-4">
+          {staffType === "teacher" && (
+            <TeacherView tickets={tickets} setTickets={setTickets} isRTL={isRTL} />
+          )}
+          
+          {staffType === "admin" && (
+            <AdminView tickets={tickets} setTickets={setTickets} isRTL={isRTL} />
+          )}
+          
+          {staffType === "principal" && (
+            <PrincipalView tickets={tickets} setTickets={setTickets} isRTL={isRTL} />
+          )}
+        </div>
 
       </main>
+
+      {/* Footer */}
       <Fotter1 />
     </div>
   );

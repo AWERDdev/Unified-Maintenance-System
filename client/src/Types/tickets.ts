@@ -1,4 +1,4 @@
-export interface Ticket {
+export interface Ticket  {
   id: string;
   asset: string;
   room: string;

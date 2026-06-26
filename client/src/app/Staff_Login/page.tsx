@@ -7,6 +7,7 @@ import { contentDict } from "@/Dict/Content_DICT";
 import { Fotter2 } from "@/components/Fotter";
 import { useState } from "react";
 import { validate_login_data } from "@/tools/Form_validation"; // Adjust your import path accordingly
+import { BASE_URL } from "@/tools/API_handler";
 
 export default function StaffLoginPage() {
   const [national_id, setNationalId] = useState("");
@@ -35,7 +36,7 @@ export default function StaffLoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3500/auth/staff/login", {
+      const response = await fetch(`${BASE_URL}/auth/staff/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)

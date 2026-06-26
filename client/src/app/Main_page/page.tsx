@@ -12,6 +12,7 @@ import { Ticket } from "@/Types/tickets";
 import { TeacherView } from "@/components/Teacher_view";
 import { AdminView } from "@/components/Admin_view";
 import { PrincipalView } from "@/components/PrincipalFunding_View";
+import { BASE_URL } from "@/tools/API_handler";
 
 // Localized school asset data setup inside localized state tracking
 const initialTickets: Ticket[]= [

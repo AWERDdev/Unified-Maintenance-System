@@ -7,6 +7,7 @@ import { Fotter2 } from "@/components/Fotter";
 import { contentDict } from "@/Dict/Content_DICT";
 import { useState } from "react";
 import { validate_signup_data } from "@/tools/Form_validation";
+import { BASE_URL } from "../../tools/API_handler";
 
 export default function StaffSignupPage() {
   // 1. All Required Form State Values
@@ -57,7 +58,7 @@ export default function StaffSignupPage() {
 
     try {
       // NOTE: If your express server runs on port 5000, update this URL to: "http://localhost:3500/api/staff/signup"
-      const response = await fetch("http://localhost:3500/auth/staff/signup", {
+      const response = await fetch(`${BASE_URL}/auth/staff/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

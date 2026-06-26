@@ -4,13 +4,15 @@
     "legal_name": "Ahmed Mohamed",
     "phone": "01023456789",
     "email": "ahmed.mohamed@school.com",
-    "password": "SecurePassword123!"
+    "password": "SecurePassword123!",
+    "school": "El-Nasr Secondary School"
   },
   {
     "national_id": "29805120105678",
     "legal_name": "Sarah Ali",
     "phone": "01123456789",
     "email": "sarah.ali@school.com",
-    "password": "AnotherPassword321!"
+    "password": "AnotherPassword321!",
+    "school": "Future International School"
   }
 ]

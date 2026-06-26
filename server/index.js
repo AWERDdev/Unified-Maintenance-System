@@ -12,7 +12,7 @@ const port = process.env.PORT || 3500;
 // 1. Security & Global Utility Framework Elements
 app.use(helmet());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000','https://unifiedmaintenance.vercel.app/'],
     credentials: true
 }));
 
@@ -43,3 +43,5 @@ app.use("/auth", authMe);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+// node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"

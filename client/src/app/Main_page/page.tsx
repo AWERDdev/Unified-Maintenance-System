@@ -5,8 +5,16 @@ import { contentDict } from "@/Dict/Content_DICT";
 import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
 import { isAUTH } from "@/tools/verfiy_user,";
-// Mock Data representing localized school asset tickets
-const initialTickets = [
+import { Ticket } from "@/Types/tickets";
+
+// 1. Importing your modular dashboard views
+// Adjust paths based on your actual file architecture
+import { TeacherView } from "@/components/Teacher_view";
+import { AdminView } from "@/components/Admin_view";
+import { PrincipalView } from "@/components/PrincipalFunding_View";
+
+// Localized school asset data setup inside localized state tracking
+const initialTickets: Ticket[]= [
   { 
     id: "TK-9402", 
     asset: "مكتب معمل الحاسب الآلي", 
@@ -45,22 +53,28 @@ const initialTickets = [
   },
 ];
 
-
 export default function MainPage() {
   const { lang } = useLanguage();
   const isRTL = lang === 'ar';
-  const [tickets] = useState(initialTickets);
+  
+  // Set up tickets state so updates reflect instantly in metric cards
+  const [tickets, setTickets] = useState(initialTickets);
   const [loading, setLoading] = useState(true);
+
+  // 2. State management for the user profile routing rule
+  // Valid roles: 'teacher' | 'admin' | 'principal'
+  const [staffType, setStaffType] = useState<"teacher" | "admin" | "principal">("teacher");
 
   useEffect(() => {
     const checkUser = async () => {
       const authStatus = await isAUTH();
       
       if (!authStatus.authenticated) {
-        // If the tool says false, instantly kick them to sign up
         window.location.href = '/signup'; 
       } else {
-        // Otherwise, turn off the loading state and let them see the page
+        // NOTE: Once you implement your role fetching logic, hook it up here:
+        // if (authStatus.staffType) setStaffType(authStatus.staffType);
+        
         setLoading(false);
       }
     };
@@ -68,7 +82,20 @@ export default function MainPage() {
     checkUser();
   }, []);
 
-if (loading) return <div>Checking permissions...</div>;
+  // 3. Dynamic metric computations based on the reactive state array
+  const pendingCount = tickets.filter(t => t.status === 'Pending').length;
+  const inProgressCount = tickets.filter(t => t.status === 'In Progress').length;
+  const resolvedCount = tickets.filter(t => t.status === 'Resolved').length;
+
+  const approveTicket = () =>{
+    console.log("approved")
+  }
+  const approveFunding = () =>{
+    console.log("approved")
+  }
+
+  if (loading) return <div>Checking permissions...</div>;
+
   return (
     <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
       {/* Header */}
@@ -90,10 +117,12 @@ if (loading) return <div>Checking permissions...</div>;
             </p>
           </div>
           
-          {/* Action Trigger for adding a ticket */}
-          <button className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto">
-            {isRTL ? "+ تسجيل بلاغ عطل جديد" : "+ File New Asset Ticket"}
-          </button>
+          {/* Action Trigger for adding a ticket (Hidden for Admins who only review) */}
+          {staffType !== "admin" && (
+            <button className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto">
+              {isRTL ? "+ تسجيل بلاغ عطل جديد" : "+ File New Asset Ticket"}
+            </button>
+          )}
         </div>
 
         {/* Executive Metric Cards Overview */}
@@ -101,7 +130,7 @@ if (loading) return <div>Checking permissions...</div>;
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "البلاغات المعلقة" : "Pending Action"}</p>
-              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">1</h3>
+              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">{pendingCount}</h3>
             </div>
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
           </div>
@@ -109,7 +138,7 @@ if (loading) return <div>Checking permissions...</div>;
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "قيد الإصلاح" : "Under Maintenance"}</p>
-              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">1</h3>
+              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">{inProgressCount}</h3>
             </div>
             <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
           </div>
@@ -117,59 +146,25 @@ if (loading) return <div>Checking permissions...</div>;
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "تمت صيانته" : "Resolved Items"}</p>
-              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">1</h3>
+              <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">{resolvedCount}</h3>
             </div>
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
           </div>
         </div>
 
-        {/* Real-time Ticket Ledger Data Table */}
-        <div className="bg-white rounded-xl border border-[#E8ECEF] shadow-sm overflow-hidden">
-          <div className="p-5 border-b border-[#F4F6F9] bg-slate-50">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-[#13315C]">
-              {isRTL ? "سجل البلاغات النشطة بالمؤسسة" : "Active School Incident Queue"}
-            </h2>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-start border-collapse text-sm">
-              <thead>
-                <tr className="bg-white text-[#4A5568] border-b border-[#E8ECEF] text-xs font-bold uppercase tracking-wider">
-                  <th className="px-6 py-4 text-start">{isRTL ? "كود البلاغ" : "Ticket ID"}</th>
-                  <th className="px-6 py-4 text-start">{isRTL ? "العنصر / العطل" : "Affected Asset"}</th>
-                  <th className="px-6 py-4 text-start">{isRTL ? "الموقع" : "Location"}</th>
-                  <th className="px-6 py-4 text-start">{isRTL ? "التصنيف" : "Category"}</th>
-                  <th className="px-6 py-4 text-start">{isRTL ? "حالة الطلب" : "Status"}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#F4F6F9] text-[#0A192F]">
-                {tickets.map((ticket) => (
-                  <tr key={ticket.id} className="hover:bg-slate-50 transition-colors">
-                    <td className="px-6 py-4 font-mono text-xs font-bold text-[#B0926A]">{ticket.id}</td>
-                    <td className="px-6 py-4 font-medium">{ticket.asset}</td>
-                    <td className="px-6 py-4 text-[#4A5568]">{ticket.room}</td>
-                    <td className="px-6 py-4">
-                      <span className="bg-[#F4F6F9] text-[#13315C] text-xs px-2.5 py-1 rounded border border-[#E8ECEF] font-medium">
-                        {isRTL ? ticket.arCategory : ticket.category}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
-                        ticket.status === 'Pending' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
-                        ticket.status === 'In Progress' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
-                        'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                      }`}>
-                        {isRTL ? (
-                          ticket.status === 'Pending' ? 'معلق' :
-                          ticket.status === 'In Progress' ? 'جاري العمل' : 'تم الإصلاح'
-                        ) : ticket.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        {/* 4. Conditional Sub-Component Router Interface Segment */}
+        <div className="w-full mt-4">
+          {staffType === "teacher" && (
+            <TeacherView tickets={tickets} isRTL={isRTL} />
+          )}
+          
+          {staffType === "admin" && (
+            <AdminView tickets={tickets} isRTL={isRTL} onApprove={approveTicket} />
+          )}
+          
+          {staffType === "principal" && (
+            <PrincipalView tickets={tickets} isRTL={isRTL} onFund={approveFunding} />
+          )}
         </div>
 
       </main>

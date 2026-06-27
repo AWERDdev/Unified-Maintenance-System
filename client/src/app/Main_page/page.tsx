@@ -6,6 +6,7 @@ import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
 import { isAUTH } from "@/tools/verfiy_user,";
 import { Ticket } from "@/Types/tickets";
+import {ROUTES} from "@/Types/Routing"
 
 // 1. Importing your modular dashboard views
 // Adjust paths based on your actual file architecture
@@ -71,9 +72,8 @@ export default function MainPage() {
       const authStatus = await isAUTH();
       
       if (!authStatus.authenticated) {
-        window.location.href = '/signup'; 
+        window.location.href = ROUTES.Staff_Login; 
       } else {
-        
         setLoading(false);
       }
     };

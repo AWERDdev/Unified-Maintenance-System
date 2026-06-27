@@ -1,8 +1,9 @@
+import { BASE_URL } from "./API_handler";
 export const isAUTH = async () => {
   try {
     // 1. Hit your newly finished backend route
     // CRITICAL: { credentials: 'include' } tells the browser to actually send the HTTP cookies along with the request
-    const response = await fetch('/api/auth/me', {
+    const response = await fetch(`${BASE_URL}/auth/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

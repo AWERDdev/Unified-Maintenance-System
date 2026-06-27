@@ -61,6 +61,7 @@ export default function StaffSignupPage() {
       const response = await fetch(`${BASE_URL}/auth/staff/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials:"include",
         body: JSON.stringify({
           legal_name,
           national_id,

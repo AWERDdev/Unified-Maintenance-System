@@ -6,16 +6,14 @@ import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
 import { isAUTH } from "@/tools/verfiy_user,";
 import { Ticket } from "@/Types/tickets";
-import {ROUTES} from "@/Types/Routing"
 
 // 1. Importing your modular dashboard views
-// Adjust paths based on your actual file architecture
 import { TeacherView } from "@/components/Teacher_view";
 import { AdminView } from "@/components/Admin_view";
 import { PrincipalView } from "@/components/PrincipalFunding_View";
 import { BASE_URL } from "@/tools/API_handler";
+import { ROUTES } from "@/Types/Routing";
 
-// Localized school asset data setup inside localized state tracking
 const initialTickets: Ticket[]= [
   { 
     id: "TK-9402", 
@@ -59,13 +57,12 @@ export default function MainPage() {
   const { lang } = useLanguage();
   const isRTL = lang === 'ar';
   
-  // Set up tickets state so updates reflect instantly in metric cards
   const [tickets, setTickets] = useState(initialTickets);
   const [loading, setLoading] = useState(true);
-
-  // 2. State management for the user profile routing rule
-  // Valid roles: 'teacher' | 'admin' | 'principal'
-  const [staffType, setStaffType] = useState<"staff" | "teacher" | "admin" | "principal">("teacher");
+  const [staffType, setStaffType] = useState<"teacher" | "admin" | "principal">("teacher");
+  
+  // New state added to hold school metadata context dynamically
+  const [schoolName, setSchoolName] = useState<string>("Al-Najah Secondary School");
 
   useEffect(() => {
     const checkUser = async () => {
@@ -74,14 +71,19 @@ export default function MainPage() {
       if (!authStatus.authenticated) {
         window.location.href = ROUTES.Staff_Login; 
       } else {
+        // Dynamic population hook template:
+        // if (authStatus.staffType) setStaffType(authStatus.staffType);
+        // if (authStatus.schoolName) setSchoolName(authStatus.schoolName);
+        
+        // Mocking localized names based on setup for demonstration
+        setSchoolName(isRTL ? "مدرسة النجاح الثانوية" : "Al-Najah Secondary School");
         setLoading(false);
       }
     };
 
     checkUser();
-  }, []);
+  }, [isRTL]);
 
-  // 3. Dynamic metric computations based on the reactive state array
   const pendingCount = tickets.filter(t => t.status === 'Pending').length;
   const inProgressCount = tickets.filter(t => t.status === 'In Progress').length;
   const resolvedCount = tickets.filter(t => t.status === 'Resolved').length;
@@ -107,16 +109,28 @@ export default function MainPage() {
         
         {/* Dashboard Title & Meta Context */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-[#E8ECEF] pb-6 gap-4">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-[#0B2545]">
-              {isRTL ? "لوحة التحكم في بلاغات صيانة المنشآت" : "Facility Maintenance Escalation Terminal"}
-            </h1>
-            <p className="text-sm text-[#4A5568] mt-1">
-              {isRTL ? "إدارة وتتبع أعطال البنية التحتية والأجهزة داخل المدرسة" : "Track structural failures and hardware ticket lifecycles"}
-            </p>
+          <div className="space-y-3">
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold text-[#0B2545]">
+                {isRTL ? "لوحة التحكم في بلاغات صيانة المنشآت" : "Facility Maintenance Escalation Terminal"}
+              </h1>
+              <p className="text-sm text-[#4A5568] mt-1">
+                {isRTL ? "إدارة وتتبع أعطال البنية التحتية والأجهزة داخل المدرسة" : "Track structural failures and hardware ticket lifecycles"}
+              </p>
+            </div>
+
+            {/* School / Registered Affiliation Badge Element */}
+            <div className="inline-flex items-center gap-2 bg-[#EEF2F6] text-[#0B2545] text-xs font-semibold px-3 py-1.5 rounded-md border border-[#E2E8F0]">
+              <svg className="w-3.5 h-3.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
+              </svg>
+              <span>
+                {isRTL ? `المؤسسة الحالية: ${schoolName}` : `Affiliation: ${schoolName}`}
+              </span>
+            </div>
           </div>
           
-          {/* Action Trigger for adding a ticket (Hidden for Admins who only review) */}
+          {/* Action Trigger for adding a ticket */}
           {staffType !== "admin" && (
             <button className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto">
               {isRTL ? "+ تسجيل بلاغ عطل جديد" : "+ File New Asset Ticket"}
@@ -151,7 +165,7 @@ export default function MainPage() {
           </div>
         </div>
 
-        {/* 4. Conditional Sub-Component Router Interface Segment */}
+        {/* Conditional Sub-Component Router Interface Segment */}
         <div className="w-full mt-4">
           {staffType === "teacher" && (
             <TeacherView tickets={tickets} isRTL={isRTL} />

@@ -15,7 +15,10 @@ app.use(helmet());
 // 1. Define allowed origins based on the environment
 const allowedOrigins = process.env.NODE_ENV === 'production' 
   ? ['https://unifiedmaintenance.vercel.app'] // Production only (No trailing slash!)
-  : ['http://localhost:3000', 'http://127.0.0.1:3000']; // Development origins
+  : ['http://localhost:3000', 
+      'http://127.0.0.1:3000',
+      'http://localhost:3001', // <--- Add Next.js fallback port
+      'http://127.0.0.1:3001']; // Development origins
 
 app.use(cors({
   origin: function (origin, callback) {

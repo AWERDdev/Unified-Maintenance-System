@@ -55,10 +55,11 @@ router.post("/staff/signup",authLimiter,validate(signupSchema, "Staff Signup"), 
 
         // 6. FIXED: Changed 'email' to 'data.email' inside JWT generation
         const token = await jwt.sign({ email: data.email }, JWT_SECRET, { expiresIn: "1h" });
+
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.SAMESITE || "strict",
+            sameSite: process.env.SAMESITE || "lax",
             maxAge: 60 * 60 * 1000
         });
 

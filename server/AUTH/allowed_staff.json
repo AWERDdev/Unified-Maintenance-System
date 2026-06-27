@@ -3,60 +3,70 @@
     "national_id": "27503150101234",
     "legal_name": "Mahmoud Hassan",
     "staff_Type": "Principal",
-    "school": "El-Nasr Secondary School"
+    "school": "El-Nasr Secondary School",
+    "phone_number": "01061234567"
   },
   {
     "national_id": "28011220104321",
     "legal_name": "Nadia Abdelrahman",
     "staff_Type": "Vice Principal",
-    "school": "El-Nasr Secondary School"
+    "school": "El-Nasr Secondary School",
+    "phone_number": "01123456789"
   },
   {
     "national_id": "29501012101234",
     "legal_name": "Ahmed Mohamed",
     "staff_Type": "Teacher",
-    "school": "El-Nasr Secondary School"
+    "school": "El-Nasr Secondary School",
+    "phone_number": "01234567890"
   },
   {
     "national_id": "29805120105678",
     "legal_name": "Sarah Ali",
     "staff_Type": "Administrator",
-    "school": "Future International School"
+    "school": "Future International School",
+    "phone_number": "01556789012"
   },
   {
     "national_id": "29108040209876",
     "legal_name": "Tarek El-Sayed",
     "staff_Type": "Teacher",
-    "school": "Future International School"
+    "school": "Future International School",
+    "phone_number": "01098765432"
   },
   {
     "national_id": "28810051403456",
     "legal_name": "Mona Mansour",
     "staff_Type": "School Counselor",
-    "school": "Future International School"
+    "school": "Future International School",
+    "phone_number": "01187654321"
   },
   {
     "national_id": "29904110107654",
     "legal_name": "Omar Ibrahim",
     "staff_Type": "IT Specialist",
-    "school": "Al-Ahram Language School"
+    "school": "Al-Ahram Language School",
+    "phone_number": "01276543210"
   },
   {
     "national_id": "28506250206543",
     "legal_name": "Fatma El-Shami",
     "staff_Type": "Librarian",
-    "school": "Al-Ahram Language School"
+    "school": "Al-Ahram Language School",
+    "phone_number": "01043210987"
   },
   {
     "national_id": "29312120108765",
     "legal_name": "Hany Youssef",
     "staff_Type": "Teacher Assistant",
-    "school": "Al-Ahram Language School"
+    "school": "Al-Ahram Language School",
+    "phone_number": "01532109876"
   },
   {
     "national_id": "27807190102345",
     "legal_name": "Khaled Mustafa",
     "staff_Type": "Academic Coordinator",
-    "school": "El-Nasr Secondary School"
+    "school": "El-Nasr Secondary School",
+    "phone_number": "01154321098"
   }
 ]

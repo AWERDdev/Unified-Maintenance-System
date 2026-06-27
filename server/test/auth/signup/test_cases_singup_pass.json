@@ -1,18 +1,102 @@
 [
   {
+    "national_id": "27503150101234",
+    "legal_name": "Mahmoud Hassan",
+    "phone": "01061234567",
+    "email": "mahmoud.hassan@nasr-school.edu.eg",
+    "password": "PrincipalSecurePass2026!",
+    "school": "El-Nasr Secondary School",
+    "access_level": "School_Leader",
+    "role_description": "Highest facility-level clearance. Authority to oversee institutional performance, approve faculty assignments, and access school-wide student/staff records."
+  },
+  {
+    "national_id": "28011220104321",
+    "legal_name": "Nadia Abdelrahman",
+    "phone": "01123456789",
+    "email": "nadia.abdelrahman@nasr-school.edu.eg",
+    "password": "VicePrincipalAuth987!",
+    "school": "El-Nasr Secondary School",
+    "access_level": "School_Management",
+    "role_description": "Elevated administrative clearance. Manages day-to-day operational logic, coordinates staff workloads, and modifies scheduling records."
+  },
+  {
     "national_id": "29501012101234",
     "legal_name": "Ahmed Mohamed",
-    "phone": "01023456789",
-    "email": "ahmed.mohamed@school.com",
-    "password": "SecurePassword123!",
-    "school": "El-Nasr Secondary School"
+    "phone": "01234567890",
+    "email": "ahmed.mohamed@nasr-school.edu.eg",
+    "password": "TeacherPortalAccess123!",
+    "school": "El-Nasr Secondary School",
+    "access_level": "Staff_Standard",
+    "role_description": "Standard educational staff clearance. Authorized to input grades, log student attendance, and interact with specific classroom modules."
   },
   {
     "national_id": "29805120105678",
     "legal_name": "Sarah Ali",
-    "phone": "01123456789",
-    "email": "sarah.ali@school.com",
-    "password": "AnotherPassword321!",
-    "school": "Future International School"
+    "phone": "01556789012",
+    "email": "sarah.ali@future-intl.edu.eg",
+    "password": "AdminSystemClearance456!",
+    "school": "Future International School",
+    "access_level": "System_Admin",
+    "role_description": "Full tenant-level access within the school framework. Responsible for managing whitelist enrollment, resetting credentials, and reviewing audit logs."
+  },
+  {
+    "national_id": "29108040209876",
+    "legal_name": "Tarek El-Sayed",
+    "phone": "01098765432",
+    "email": "tarek.elsayed@future-intl.edu.eg",
+    "password": "TarekStaffSecurePass!",
+    "school": "Future International School",
+    "access_level": "Staff_Standard",
+    "role_description": "Standard educational staff clearance. Authorized to input grades, log student attendance, and interact with specific classroom modules."
+  },
+  {
+    "national_id": "28810051403456",
+    "legal_name": "Mona Mansour",
+    "phone": "01187654321",
+    "email": "mona.mansour@future-intl.edu.eg",
+    "password": "CounselorSupport987!",
+    "school": "Future International School",
+    "access_level": "Staff_Sensitive",
+    "role_description": "Specialized staff access. Granted permission to read and manage sensitive student behavioral portfolios, wellness logs, and private counseling records."
+  },
+  {
+    "national_id": "29904110107654",
+    "legal_name": "Omar Ibrahim",
+    "phone": "01276543210",
+    "email": "omar.ibrahim@ahram-lang.edu.eg",
+    "password": "ITTechRootAccess!2026",
+    "school": "Al-Ahram Language School",
+    "access_level": "IT_Support",
+    "role_description": "Technical maintenance clearance. Permissions tailored for infrastructure troubleshooting, hardware mapping, and internal software deployment validations."
+  },
+  {
+    "national_id": "28506250206543",
+    "legal_name": "Fatma El-Shami",
+    "phone": "01043210987",
+    "email": "fatma.elshami@ahram-lang.edu.eg",
+    "password": "LibrarianInventory777!",
+    "school": "Al-Ahram Language School",
+    "access_level": "Staff_Limited",
+    "role_description": "Restricted administrative role. Access is bounded tightly to inventory control systems, resource cataloging, and basic facility booking data."
+  },
+  {
+    "national_id": "29312120108765",
+    "legal_name": "Hany Youssef",
+    "phone": "01532109876",
+    "email": "hany.youssef@ahram-lang.edu.eg",
+    "password": "AssistantAccessToken88!",
+    "school": "Al-Ahram Language School",
+    "access_level": "Staff_Limited",
+    "role_description": "Restricted educational role. Read-only permissions across class sheets, with data entry rights limited to co-signing attendance logs."
+  },
+  {
+    "national_id": "27807190102345",
+    "legal_name": "Khaled Mustafa",
+    "phone": "01154321098",
+    "email": "khaled.mustafa@nasr-school.edu.eg",
+    "password": "CoordinatorAuthKey55!",
+    "school": "El-Nasr Secondary School",
+    "access_level": "Academic_Coordinator",
+    "role_description": "Cross-departmental supervisor. Authorized to review curriculum mapping, cross-examine standard grades, and manage exam schedules across departments."
   }
 ]

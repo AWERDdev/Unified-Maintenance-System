@@ -64,7 +64,7 @@ export default function MainPage() {
 
   // 2. State management for the user profile routing rule
   // Valid roles: 'teacher' | 'admin' | 'principal'
-  const [staffType, setStaffType] = useState<"teacher" | "admin" | "principal">("teacher");
+  const [staffType, setStaffType] = useState<"staff" | "teacher" | "admin" | "principal">("teacher");
 
   useEffect(() => {
     const checkUser = async () => {
@@ -73,8 +73,6 @@ export default function MainPage() {
       if (!authStatus.authenticated) {
         window.location.href = '/signup'; 
       } else {
-        // NOTE: Once you implement your role fetching logic, hook it up here:
-        // if (authStatus.staffType) setStaffType(authStatus.staffType);
         
         setLoading(false);
       }

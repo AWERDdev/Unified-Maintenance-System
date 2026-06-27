@@ -11,9 +11,27 @@ const port = process.env.PORT || 3500;
 
 // 1. Security & Global Utility Framework Elements
 app.use(helmet());
+
+// 1. Define allowed origins based on the environment
+const allowedOrigins = process.env.NODE_ENV === 'production' 
+  ? ['https://unifiedmaintenance.vercel.app'] // Production only (No trailing slash!)
+  : ['http://localhost:3000', 'http://127.0.0.1:3000']; // Development origins
+
 app.use(cors({
-    origin: ['http://localhost:3000','https://unifiedmaintenance.vercel.app/'],
-    credentials: true
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, or server-to-server)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various Smart TVs) choke on 204
 }));
 
 app.use(express.json());

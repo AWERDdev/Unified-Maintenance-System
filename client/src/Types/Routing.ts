@@ -4,7 +4,8 @@ export const ROUTES = {
 "Staff_Signup":'/Staff_Signup',
 "Staff_Login":'/Staff_Login',
 "About":'/About',
-"Profile":'/profile'
+"Profile":'/profile',
+"Ticket_creation_page":'/Main_page/Ticket_creation'
 }as const;
   
   // This creates a union type of all possible route keys

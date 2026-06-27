@@ -180,7 +180,10 @@ useEffect(() => {
           {/* Action Trigger for adding a ticket */}
    {/* Action Trigger for adding a ticket */}
 {["Administrator", "IT Specialist"].includes(staffType) && (
-  <button className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto hover:cursor-pointer">
+  <button 
+  className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto hover:cursor-pointer"
+  onClick={ () => ROUTES.Ticket_creation_page }
+  >
     {isRTL ? "+ تسجيل بلاغ عطل جديد" : "+ File New Asset Ticket"}
   </button>
 )}

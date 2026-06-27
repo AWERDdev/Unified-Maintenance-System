@@ -3,11 +3,21 @@ import { AdminViewProps } from "@/Types/tickets";
 export const AdminView = ({ tickets, isRTL, onApprove }: AdminViewProps) => {
   return (
     <div className="bg-white rounded-xl border border-[#E8ECEF] shadow-sm overflow-hidden">
-      <div className="p-5 border-b border-[#F4F6F9] bg-slate-50">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-[#13315C]">
-          {isRTL ? "طلبات الفحص المعملي والهندسي المعلقة" : "Technical Assessment Queue"}
-        </h2>
+      
+      {/* Header Container with contextual dashboard identifier text */}
+      <div className="p-5 border-b border-[#F4F6F9] bg-slate-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="flex items-center gap-3">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-[#13315C]">
+            {isRTL ? "طلبات الفحص المعملي والهندسي المعلقة" : "Technical Assessment Queue"}
+          </h2>
+          
+          {/* Simple structural role badge text */}
+          <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-[#0B2545]/10 text-[#0B2545] uppercase tracking-wider">
+            {isRTL ? "صلاحية المسؤول الإداري" : "Admin Portal"}
+          </span>
+        </div>
       </div>
+
       <div className="overflow-x-auto">
         <table className="w-full text-start border-collapse text-sm">
           <thead>
@@ -19,7 +29,7 @@ export const AdminView = ({ tickets, isRTL, onApprove }: AdminViewProps) => {
               <th className="px-6 py-4 text-start">{isRTL ? "الإجراء الفني" : "Technical Action"}</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#F4F6F9]">
+          <tbody className="divide-y divide-[#F4F6F9] text-[#0A192F]">
             {tickets.map((ticket) => (
               <tr key={ticket.id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 font-mono text-xs font-bold text-[#B0926A]">{ticket.id}</td>

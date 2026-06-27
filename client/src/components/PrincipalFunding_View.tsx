@@ -3,11 +3,21 @@ import { PrincipalViewProps } from "@/Types/tickets"
 export const PrincipalView = ({ tickets, isRTL, onFund }: PrincipalViewProps) => {
   return (
     <div className="bg-white rounded-xl border border-[#E8ECEF] shadow-sm overflow-hidden">
-      <div className="p-5 border-b border-[#F4F6F9] bg-slate-50">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-[#13315C]">
-          {isRTL ? "إدارة اعتمادات الميزانية والصرف" : "Executive Budget Allocations & Funding"}
-        </h2>
+      
+      {/* Header Container with contextual dashboard identifier text */}
+      <div className="p-5 border-b border-[#F4F6F9] bg-slate-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="flex items-center gap-3">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-[#13315C]">
+            {isRTL ? "إدارة اعتمادات الميزانية والصرف" : "Executive Budget Allocations & Funding"}
+          </h2>
+          
+          {/* Simple structural role badge text */}
+          <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-[#0B2545]/10 text-[#0B2545] uppercase tracking-wider">
+            {isRTL ? "صلاحية مدير المدرسة" : "Principal Portal"}
+          </span>
+        </div>
       </div>
+      
       <div className="overflow-x-auto">
         <table className="w-full text-start border-collapse text-sm">
           <thead>
@@ -28,9 +38,6 @@ export const PrincipalView = ({ tickets, isRTL, onFund }: PrincipalViewProps) =>
                   <span className={`text-xs px-2.5 py-0.5 rounded font-medium ${ticket.adminApproved ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
                     {ticket.adminApproved ? (isRTL ? "معتمد فنيًا" : "Verified by Admin") : (isRTL ? "لم يفحص فنيًا" : "Awaiting Inspection")}
                   </span>
-                </td>
-                <td className="px-6 py-4 font-bold text-[#0B2545]">
-                  {ticket.cost} {isRTL ? "ج.م" : "EGP"}
                 </td>
                 <td className="px-6 py-4">
                   {!ticket.principalFunded ? (

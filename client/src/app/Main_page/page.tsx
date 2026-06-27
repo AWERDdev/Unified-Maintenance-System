@@ -24,8 +24,7 @@ const initialTickets: Ticket[]= [
     date: "2026-06-14", 
     arCategory: "بنية تحتية",
     adminApproved: false,
-    principalFunded: false,
-    cost: 1500
+    principalFunded: false
   },
   { 
     id: "TK-8831", 
@@ -37,7 +36,6 @@ const initialTickets: Ticket[]= [
     arCategory: "أجهزة برمجية",
     adminApproved: true,
     principalFunded: false,
-    cost: 4200
   },
   { 
     id: "TK-7429", 
@@ -49,7 +47,6 @@ const initialTickets: Ticket[]= [
     arCategory: "كهرباء",
     adminApproved: true,
     principalFunded: true,
-    cost: 600
   },
 ];
 

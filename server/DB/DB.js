@@ -6,7 +6,7 @@ const dbURI = `${process.env.MONGODB_URL}/unified_main` || 'mongodb://localhost:
 
 const connect_DB = () => {
   mongoose.connect(dbURI)
-    .then(() => console.log('🚀 MongoDB Connected Successfully.'))
+    .then(() => console.log(`🚀 MongoDB Connected Successfully. and using this URI ${dbURI}`))
     .catch(err => console.error('❌ Database connection error:', err));
 };
 

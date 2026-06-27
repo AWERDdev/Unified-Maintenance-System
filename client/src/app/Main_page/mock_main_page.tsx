@@ -4,7 +4,7 @@ import { useLanguage } from "@/tools/LanguageHandler";
 import { contentDict } from "@/Dict/Content_DICT";
 import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
-import { isAUTH } from "@/tools/verfiy_user,";
+import { isAUTH } from "@/tools/verfiy_user";
 import { Ticket } from "@/Types/tickets";
 
 // 1. Importing your modular dashboard views

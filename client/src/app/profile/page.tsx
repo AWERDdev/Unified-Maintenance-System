@@ -3,7 +3,7 @@ import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter2} from "@/components/Fotter";
 import {useLanguage } from "@/tools/LanguageHandler";
 import { contentDict } from "@/Dict/Content_DICT";
-import { isAUTH } from "@/tools/verfiy_user,";
+import { isAUTH } from "@/tools/verfiy_user";
 import { useState, useEffect } from "react";
 import { BASE_URL } from "@/tools/API_handler";
 

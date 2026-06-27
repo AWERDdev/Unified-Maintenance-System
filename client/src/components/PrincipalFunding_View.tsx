@@ -44,7 +44,7 @@ export const PrincipalView = ({ tickets, isRTL, onFund }: PrincipalViewProps) =>
                     <button 
                       onClick={() => onFund(ticket.id)}
                       disabled={!ticket.adminApproved} // Ensures structural verification happens first
-                      className={`text-xs font-bold py-1.5 px-3 rounded transition-colors text-white ${
+                      className={`text-xs font-bold py-1.5 px-3 rounded transition-colors text-white hover:cursor-pointer ${
                         ticket.adminApproved 
                           ? 'bg-[#0B2545] hover:bg-[#13315C] shadow-sm' 
                           : 'bg-slate-300 cursor-not-allowed text-slate-500'

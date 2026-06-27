@@ -4,10 +4,10 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET || "JWT_SECRET";
-const { authLimiter } = require("../middlewares/rate_limiter/rate_limiter");
+// const { authLimiter } = require("../middlewares/rate_limiter/rate_limiter");
 
 // Note: Ensure `cookie-parser` middleware is registered in your main server file (e.g., app.js / server.js)
-router.get('/me', authLimiter, async (req, res) => {
+router.get('/me',async (req, res) => {
     console.log(`\n[DEBUG] === Incoming GET /me request ===`);
     console.log(`[DEBUG] IP: ${req.ip} | Timestamp: ${new Date().toISOString()}`);
 

@@ -1,10 +1,30 @@
-  {
-    "national_id": "27503150101234",
-    "legal_name": "AWERDdev",
-    "phone": "01061234567",
-    "email": "mahmoud.hassan@nasr-school.edu.eg",
-    "password": "12345678",
-    "school": "El-Nasr Secondary School",
-    "access_level": "School_Leader",
-    "role_description": "Highest facility-level clearance. Authority to oversee institutional performance, approve faculty assignments, and access school-wide student/staff records."
-  }
+ [
+    {
+      "national_id": "29999999999999",
+      "legal_name": "AWERDdev",
+      "staff_Type": "Super Admin",
+      "school": "System Root",
+      "phone_number": "01000000000"
+    },
+    {
+      "national_id": "27503150101234",
+      "legal_name": "Mahmoud Hassan",
+      "staff_Type": "Principal",
+      "school": "El-Nasr Secondary School",
+      "phone_number": "01061234567"
+    },
+    {
+      "national_id": "29805120105678",
+      "legal_name": "Sarah Ali",
+      "staff_Type": "Administrator",
+      "school": "Future International School",
+      "phone_number": "01556789012"
+    },
+    {
+      "national_id": "29108040209876",
+      "legal_name": "Tarek El-Sayed",
+      "staff_Type": "Teacher",
+      "school": "Future International School",
+      "phone_number": "01098765432"
+    }
+  ]

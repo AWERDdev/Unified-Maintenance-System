@@ -60,7 +60,7 @@ router.post("/staff/signup",authLimiter,validate(signupSchema, "Staff Signup"), 
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.SAMESITE || "lax",
-            maxAge: 60 * 60 * 1000
+            maxAge: 60 * 60 * 1000 // 1 hour
         });
 
         return res.status(200).json({ message: "Signup successful" });

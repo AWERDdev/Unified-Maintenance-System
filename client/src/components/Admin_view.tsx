@@ -44,7 +44,7 @@ export const AdminView = ({ tickets, isRTL, onApprove }: AdminViewProps) => {
                   {!ticket.adminApproved ? (
                     <button 
                       onClick={() => onApprove(ticket.id)} 
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-1.5 px-3 rounded shadow-sm transition-colors"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-1.5 px-3 rounded shadow-sm transition-colors hover:cursor-pointer"
                     >
                       {isRTL ? "اعتماد الصيانة فنيًا ✓" : "Approve Technical Validity ✓"}
                     </button>

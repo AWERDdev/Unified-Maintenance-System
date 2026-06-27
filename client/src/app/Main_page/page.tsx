@@ -4,7 +4,7 @@ import { useLanguage } from "@/tools/LanguageHandler";
 import { contentDict } from "@/Dict/Content_DICT";
 import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
-import { isAUTH } from "@/tools/verfiy_user,";
+import { isAUTH } from "@/tools/verfiy_user";
 import { Ticket } from "@/Types/tickets";
 
 // 1. Importing your modular dashboard views
@@ -56,31 +56,81 @@ export default function MainPage() {
   
   const [tickets, setTickets] = useState(initialTickets);
   const [loading, setLoading] = useState(true);
-  const [staffType, setStaffType] = useState<"teacher" | "admin" | "principal">("teacher");
+  const [staffType, setStaffType] = useState<
+  | "Principal"
+  | "Vice Principal"
+  | "Teacher"
+  | "Administrator"
+  | "School Counselor"
+  | "IT Specialist"
+  | "Librarian"
+  | "Teacher Assistant"
+  | "Academic Coordinator"
+>("Teacher");
   
   // New state added to hold school metadata context dynamically
   const [schoolName, setSchoolName] = useState<string>("Al-Najah Secondary School");
+useEffect(() => {
+  const checkUser = async () => {
+    console.log("🔍 [DEBUG] Executing checkUser...");
+    const authStatus = await isAUTH();
+    console.log("🔍 [DEBUG] authStatus received:", authStatus);
+    
+    if (!authStatus.authenticated) {
+      console.warn("⚠️ [DEBUG] Validation failed. Redirecting to:", ROUTES.Staff_Login);
+      window.location.href = ROUTES.Staff_Login; 
+      return; // Stop execution if unauthorized
+    }
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const authStatus = await isAUTH();
-      
-      if (!authStatus.authenticated) {
-        window.location.href = ROUTES.Staff_Login; 
-      } else {
-        // Dynamic population hook template:
-        // if (authStatus.staffType) setStaffType(authStatus.staffType);
-        // if (authStatus.schoolName) setSchoolName(authStatus.schoolName);
-        
-        // Mocking localized names based on setup for demonstration
-        setSchoolName(isRTL ? "مدرسة النجاح الثانوية" : "Al-Najah Secondary School");
+    try {
+      const targetUrl = `${BASE_URL}/routes/fetch/status`;
+      console.log(`🌐 [DEBUG] Fetching payload from target URL: ${targetUrl}`);
+
+      const response = await fetch(targetUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', 
+      });
+
+      console.log(`🌐 [DEBUG] HTTP Status Code returned: ${response.status} (${response.statusText})`);
+
+      // FIX 1: Stop execution immediately if the server didn't respond with a 200 OK status
+      if (!response.ok) {
+        console.error("Failed to fetch data from status endpoint, status code:", response.status);
         setLoading(false);
+        return; 
       }
-    };
+      
+      const data = await response.json();
+      console.log("📦 [DEBUG] Raw parsed json data received:", data);
+      console.log("📦 [DEBUG] Type of data received:", typeof data);
 
-    checkUser();
-  }, [isRTL]);
+      // FIX 2: Validate that data actually returned something readable before assigning properties
+      if (!data) {
+        console.warn("User data payload returned empty from server.");
+        setLoading(false);
+        return;
+      }
 
+      console.log(`📝 [DEBUG] Attempting state writes -> staff_school: "${data.staff_school}", staff_type: "${data.staff_type}"`);
+
+      // Safe to assign now
+      setSchoolName(data.staff_school || "Al-Najah Secondary School");
+      setStaffType(data.staff_type || "teacher");
+      
+      console.log("✅ [DEBUG] State values dispatched. Flipping loading state to false.");
+      setLoading(false);
+
+    } catch (error) {
+      console.error(`Network or Parsing error encountered: ${error}`);
+      setLoading(false);
+    }
+  };
+
+  checkUser();
+}, []);
   const pendingCount = tickets.filter(t => t.status === 'Pending').length;
   const inProgressCount = tickets.filter(t => t.status === 'In Progress').length;
   const resolvedCount = tickets.filter(t => t.status === 'Resolved').length;
@@ -128,11 +178,12 @@ export default function MainPage() {
           </div>
           
           {/* Action Trigger for adding a ticket */}
-          {staffType !== "admin" && (
-            <button className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto">
-              {isRTL ? "+ تسجيل بلاغ عطل جديد" : "+ File New Asset Ticket"}
-            </button>
-          )}
+   {/* Action Trigger for adding a ticket */}
+{["Administrator", "IT Specialist"].includes(staffType) && (
+  <button className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto hover:cursor-pointer">
+    {isRTL ? "+ تسجيل بلاغ عطل جديد" : "+ File New Asset Ticket"}
+  </button>
+)}
         </div>
 
         {/* Executive Metric Cards Overview */}
@@ -163,19 +214,22 @@ export default function MainPage() {
         </div>
 
         {/* Conditional Sub-Component Router Interface Segment */}
-        <div className="w-full mt-4">
-          {staffType === "teacher" && (
-            <TeacherView tickets={tickets} isRTL={isRTL} />
-          )}
-          
-          {staffType === "admin" && (
-            <AdminView tickets={tickets} isRTL={isRTL} onApprove={approveTicket} />
-          )}
-          
-          {staffType === "principal" && (
-            <PrincipalView tickets={tickets} isRTL={isRTL} onFund={approveFunding} />
-          )}
-        </div>
+      <div className="w-full mt-4">
+  {/* 1. Principal & Funding Management Dashboard Segment */}
+  {["Principal", "Vice Principal"].includes(staffType) && (
+    <PrincipalView tickets={tickets} isRTL={isRTL} onFund={approveFunding} />
+  )}
+  
+  {/* 2. Administrative & Infrastructure Operations Dashboard Segment */}
+  {["Administrator", "IT Specialist"].includes(staffType) && (
+    <AdminView tickets={tickets} isRTL={isRTL} onApprove={approveTicket} />
+  )}
+  
+  {/* 3. Academic staff, Teachers, and General Support Portal Segment */}
+  {["Teacher", "School Counselor", "Librarian", "Teacher Assistant", "Academic Coordinator"].includes(staffType) && (
+    <TeacherView tickets={tickets} isRTL={isRTL} />
+  )}
+</div>
 
       </main>
 

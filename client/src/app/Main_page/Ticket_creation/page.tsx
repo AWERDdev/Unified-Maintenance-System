@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import { useLanguage } from "@/tools/LanguageHandler";
-
+import { BASE_URL } from "@/tools/API_handler";
 // Type definition matching your structural schema
 interface NewTicket {
   id: string;
@@ -41,24 +41,23 @@ export default function CreateTicketPage() {
 
     setIsSubmitting(true);
 
-    // 1. Generate fully structured data payload matching your interface exactly
-    const ticketPayload: NewTicket = {
-      id: `TK-${Math.floor(1000 + Math.random() * 9000)}`, // Generates random 4-digit token
-      asset,
-      room,
-      category,
-      status: "Pending",
-      date: new Date().toISOString().split('T')[0], // Automatically tracks current calendar date
-      arCategory: categoryMap[category], // Structural mapping
-      adminApproved: false, // Core administrative constraint defaults
-      principalFunded: false,
-      cost: Number(cost) || 0,
-    };
 
     try {
-      // 2. Insert your backend fetch request handler here:
-      // const response = await fetch('/api/tickets', { method: 'POST', body: JSON.stringify(ticketPayload) });
+      const response = await fetch(`${BASE_URL}/routes/tickets/create`,{
+        method:"POST",
+        headers:{'Content-Type':'application/json'},
+        credentials:"include",
+        body: JSON.stringify({
+          asset:asset,
+          room:room,
+          category:category,
+          arCategory:categoryMap[category],
+          cost:cost        
+        })
+      })
       
+      const ticketPayload = await response.json()
+
       console.log("Structured Ticket Payload Saved Successfully:", ticketPayload);
       
       // Temporary Success Feedback Loop Clear
@@ -158,14 +157,14 @@ export default function CreateTicketPage() {
             <button 
               type="button" 
               onClick={() => window.history.back()}
-              className="px-5 py-2.5 rounded-lg border border-[#E8ECEF] text-sm font-medium text-[#4A5568] hover:bg-slate-50 transition-colors"
+              className="px-5 py-2.5 rounded-lg border border-[#E8ECEF] text-sm font-medium text-[#4A5568] hover:bg-slate-50 transition-colors hover:cursor-pointer"
             >
               {isRTL ? "إلغاء الأمر" : "Cancel Process"}
             </button>
             <button 
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 rounded-lg bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold shadow-sm transition-all disabled:opacity-50"
+              className="px-6 py-2.5 rounded-lg bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold shadow-sm transition-all disabled:opacity-50 hover:cursor-pointer"
             >
               {isSubmitting ? (isRTL ? "جاري الحفظ البلاغ..." : "Saving Ledger Data...") : (isRTL ? "تأكيد وإرسال البلاغ" : "Submit Ticket Log")}
             </button>

@@ -56,13 +56,18 @@ app.get('/', (req, res) => {
 
 const StaffSignup = require("./AUTH/Staff_AUTH_signUP");
 const StaffLogin = require("./AUTH/Staff_Auth_logIN");
+const StaffLogout = require("./AUTH/Staff_Auth_logOUT");
 const authMe = require("./AUTH/is_auth");
 const Fetch_user_data = require("./routes/Fetch_user_data")
+const Ticket_data = require("./routes/Ticket_data")
 
 app.use("/auth", StaffSignup);
 app.use("/auth", StaffLogin);
+app.use("/auth", StaffLogout);
 app.use("/auth", authMe);
-app.use("/routes", Fetch_user_data)
+app.use("/routes", Fetch_user_data);
+app.use("/routes", Ticket_data);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

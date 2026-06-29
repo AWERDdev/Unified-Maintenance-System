@@ -8,6 +8,7 @@ export interface Ticket  {
   arCategory: string;
   adminApproved: boolean;
   principalFunded: boolean;
+  cost: number;
 }
 
 export interface TeacherViewProps {

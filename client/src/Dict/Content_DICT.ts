@@ -85,6 +85,16 @@ export const contentDict: Record<string, TranslationKeys> = {
       noAccount: "Do not have an authorized profile assigned yet?"
     },
 
+    profilePage: {
+      title: "Personnel Profile Registry",
+      subtitle: "Verified staff identity and institutional affiliation record",
+      logoutBtn: "Terminate Active Session",
+      loading: "Verifying personnel credentials...",
+      error: "Unable to retrieve profile data. Please try again later.",
+      memberSince: "Account Registered",
+      schoolAffiliation: "Institutional Affiliation"
+    },
+
     // 6. Global Layout Footer Elements
     footer: { 
       rights: "© 2026 Unified Maintenance Escalation System. All administrative rights reserved." 
@@ -160,6 +170,16 @@ export const contentDict: Record<string, TranslationKeys> = {
       },
       submitBtn: "تسجيل الدخول وإصدار التصريح",
       noAccount: "ليس لديك ملف إداري معتمد على المنصة حتى الآن؟"
+    },
+
+    profilePage: {
+      title: "سجل الملف الشخصي للموظف",
+      subtitle: "بيانات الهوية المعتمدة والانتماء المؤسسي للكادر الإداري",
+      logoutBtn: "إنهاء الجلسة النشطة",
+      loading: "جاري التحقق من بيانات الاعتماد...",
+      error: "تعذر استرجاع بيانات الملف الشخصي. يرجى المحاولة لاحقاً.",
+      memberSince: "تاريخ تسجيل الحساب",
+      schoolAffiliation: "الانتماء المؤسسي"
     },
 
     // 6. حقوق الطبع والنشر السفلية العامة

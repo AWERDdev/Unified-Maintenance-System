@@ -6,6 +6,7 @@ import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
 import { isAUTH } from "@/tools/verfiy_user";
 import { Ticket } from "@/Types/tickets";
+import { useRouter } from "next/navigation";
 
 // 1. Importing your modular dashboard views
 import { TeacherView } from "@/components/Teacher_view";
@@ -24,7 +25,8 @@ const initialTickets: Ticket[]= [
     date: "2026-06-14", 
     arCategory: "بنية تحتية",
     adminApproved: false,
-    principalFunded: false
+    principalFunded: false,
+    cost:500
   },
   { 
     id: "TK-8831", 
@@ -36,6 +38,7 @@ const initialTickets: Ticket[]= [
     arCategory: "أجهزة برمجية",
     adminApproved: true,
     principalFunded: false,
+    cost:500
   },
   { 
     id: "TK-7429", 
@@ -47,15 +50,18 @@ const initialTickets: Ticket[]= [
     arCategory: "كهرباء",
     adminApproved: true,
     principalFunded: true,
+    cost:500
   },
 ];
 
 export default function MainPage() {
+  const router = useRouter()
   const { lang } = useLanguage();
   const isRTL = lang === 'ar';
   
   const [tickets, setTickets] = useState(initialTickets);
   const [loading, setLoading] = useState(true);
+
   const [staffType, setStaffType] = useState<
   | "Principal"
   | "Vice Principal"
@@ -182,7 +188,7 @@ useEffect(() => {
 {["Administrator", "IT Specialist"].includes(staffType) && (
   <button 
   className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto hover:cursor-pointer"
-  onClick={ () => ROUTES.Ticket_creation_page }
+  onClick={ () => router.push(ROUTES.Ticket_creation_page) }
   >
     {isRTL ? "+ تسجيل بلاغ عطل جديد" : "+ File New Asset Ticket"}
   </button>

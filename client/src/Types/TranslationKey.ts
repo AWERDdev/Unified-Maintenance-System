@@ -53,4 +53,13 @@ loginForm: {
   submitBtn: string;
   noAccount: string;
 };
+profilePage: {
+  title: string;
+  subtitle: string;
+  logoutBtn: string;
+  loading: string;
+  error: string;
+  memberSince: string;
+  schoolAffiliation: string;
+};
 };

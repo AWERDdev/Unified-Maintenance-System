@@ -25,6 +25,7 @@ const initialTickets: Ticket[]= [
     arCategory: "بنية تحتية",
     adminApproved: false,
     principalFunded: false,
+    cost:500
   },
   { 
     id: "TK-8831", 
@@ -36,6 +37,7 @@ const initialTickets: Ticket[]= [
     arCategory: "أجهزة برمجية",
     adminApproved: true,
     principalFunded: false,
+    cost:500
   },
   { 
     id: "TK-7429", 
@@ -47,6 +49,7 @@ const initialTickets: Ticket[]= [
     arCategory: "كهرباء",
     adminApproved: true,
     principalFunded: true,
+    cost:500
   },
 ];
 

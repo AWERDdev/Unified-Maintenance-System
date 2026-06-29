@@ -47,7 +47,7 @@ router.post("/staff/login",authLimiter, validate(loginSchema, "Staff Login"), as
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.SAMESITE || "lax",
+            sameSite:  (process.env.SAMESITE || "lax").toLowerCase(),
             maxAge: 60 * 60 * 1000 // 1 hour
         });
 

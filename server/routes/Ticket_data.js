@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
+
 
 const JWT_SECRET = process.env.JWT_SECRET || "JWT_SECRET";
 const staff = require("../DB/models/Staff_model");

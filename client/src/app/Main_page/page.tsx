@@ -16,7 +16,7 @@ import { BASE_URL } from "@/tools/API_handler";
 import { ROUTES } from "@/Types/Routing";
 
 // 1. Import your frontend fetch handlers
-import { Fetch_tickets_my, Fetch_tickets_all } from "@/tools/Fetch_tickets"; // Adjust this path to your actual file layout
+import { Fetch_tickets_my, Fetch_tickets_all, Update_ticket_approval, Resolve_ticket } from "@/tools/Fetch_tickets"; // Adjust this path to your actual file layout
 
 export default function MainPage() {
   const router = useRouter();
@@ -120,8 +120,26 @@ export default function MainPage() {
   const inProgressCount = tickets.filter(t => t.status === 'In Progress').length;
   const resolvedCount = tickets.filter(t => t.status === 'Resolved').length;
 
-  const approveTicket = () => { console.log("Ticket structural state updated to Approved") };
-  const approveFunding = () => { console.log("Ticket funding execution successfully resolved") };
+  const approveTicket = async (ticketId: string) => { 
+    const updatedTicket = await Update_ticket_approval(ticketId);
+    if (updatedTicket) {
+      setTickets(prevTickets => prevTickets.map(ticket => ticket.id === ticketId ? updatedTicket : ticket));
+    }
+  };
+
+  const approveFunding = async (ticketId: string) => { 
+    const updatedTicket = await Update_ticket_approval(ticketId);
+    if (updatedTicket) {
+      setTickets(prevTickets => prevTickets.map(ticket => ticket.id === ticketId ? updatedTicket : ticket));
+    }
+  };
+
+  const resolveTicket = async (ticketId: string) => { 
+    const updatedTicket = await Resolve_ticket(ticketId);
+    if (updatedTicket) {
+      setTickets(prevTickets => prevTickets.map(ticket => ticket.id === ticketId ? updatedTicket : ticket));
+    }
+  };
 
   if (loading) return <div className="p-8 text-center text-sm font-semibold tracking-wide text-slate-500">Checking terminal authorization properties...</div>;
 
@@ -200,7 +218,7 @@ export default function MainPage() {
           )}
           
           {["Super Admin", "Administrator", "IT Specialist"].includes(staffType) && (
-            <AdminView tickets={tickets} isRTL={isRTL} onApprove={approveTicket} />
+            <AdminView tickets={tickets} isRTL={isRTL} onApprove={approveTicket} onResolve={resolveTicket} />
           )}
           
           {["Teacher", "School Counselor", "Librarian", "Teacher Assistant", "Academic Coordinator"].includes(staffType) && (

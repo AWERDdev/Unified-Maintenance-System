@@ -49,9 +49,9 @@ router.post("/tickets/create", async (req, res) => {
         const user = await getAuthenticatedStaff(req, res);
         if (!user) return;
         
-        const allowedRoles = ["Administrator", "IT Specialist"];
+        const allowedRoles = ["Administrator", "IT Specialist", "Teacher", "School Counselor", "Librarian", "Teacher Assistant", "Academic Coordinator"];
         if (!allowedRoles.includes(user.staff_Type)) { 
-            return res.status(403).json({ message: "Unauthorized access. Admin only." });
+            return res.status(403).json({ message: "Unauthorized access." });
          }
 
         const { asset, room, category, arCategory, cost } = req.body;
@@ -132,6 +132,87 @@ router.get("/tickets/all", async (req, res) => {
     } catch (error) {
         console.error(`[DEBUG CRITICAL ERROR] Route execution crashed: ${error.stack || error}`);
         return res.status(500).json({ message: "Internal server error during ticket retrieval." });
+    }
+});
+
+router.patch("/tickets/:id/approve", async (req, res) => {
+    console.log("\n--- [DEBUG START] PATCH /routes/tickets/:id/approve ---");
+    try {
+        const user = await getAuthenticatedStaff(req, res);
+        if (!user) return;
+
+        const { id } = req.params;
+
+        const ticket = await Ticket.findOne({ id });
+
+        if (!ticket) {
+            return res.status(404).json({ message: "Ticket not found." });
+        }
+
+        // Admin/IT Specialist logic
+        const adminRoles = ["Administrator", "IT Specialist"];
+        if (adminRoles.includes(user.staff_Type)) {
+            ticket.adminApproved = true;
+        }
+
+        // Principal/Vice Principal logic
+        const principalRoles = ["Principal", "Vice Principal"];
+        if (principalRoles.includes(user.staff_Type)) {
+            ticket.principalFunded = true;
+        }
+
+        // Dynamic status progression
+        if (ticket.adminApproved && ticket.principalFunded && ticket.status === "Pending") {
+            ticket.status = "In Progress";
+        }
+
+        await ticket.save();
+
+        console.log(`[DEBUG] Ticket updated: ${ticket.id}`);
+        console.log("--- [DEBUG END] Success ---\n");
+
+        return res.status(200).json(ticket);
+    } catch (error) {
+        console.error(`[DEBUG CRITICAL ERROR] Route execution crashed: ${error.stack || error}`);
+        console.log("--- [DEBUG END] Exception Raised ---\n");
+        return res.status(500).json({ message: "Internal server error during ticket update." });
+    }
+});
+
+router.patch("/tickets/:id/resolve", async (req, res) => {
+    console.log("\n--- [DEBUG START] PATCH /routes/tickets/:id/resolve ---");
+    try {
+        const user = await getAuthenticatedStaff(req, res);
+        if (!user) return;
+
+        const allowedRoles = ["Super Admin", "Administrator", "IT Specialist"];
+        if (!allowedRoles.includes(user.staff_Type)) { 
+            return res.status(403).json({ message: "Unauthorized access." });
+        }
+
+        const { id } = req.params;
+
+        // Try finding by custom id first, then by _id
+        let ticket = await Ticket.findOne({ id });
+        if (!ticket) {
+            ticket = await Ticket.findById(id);
+        }
+
+        if (!ticket) {
+            return res.status(404).json({ message: "Ticket not found." });
+        }
+
+        ticket.status = "Resolved";
+        await ticket.save();
+
+        console.log(`[DEBUG] Ticket resolved: ${ticket.id}`);
+        console.log("--- [DEBUG END] Success ---\n");
+
+        return res.status(200).json(ticket);
+    } catch (error) {
+        console.error(`[DEBUG CRITICAL ERROR] Route execution crashed: ${error.stack || error}`);
+        console.log("--- [DEBUG END] Exception Raised ---\n");
+        return res.status(500).json({ message: "Internal server error during ticket resolve." });
     }
 });
 

@@ -31,4 +31,5 @@ export interface AdminViewProps {
   tickets: Ticket[];
   isRTL: boolean;
   onApprove: (id: string) => void;
+  onResolve: (id: string) => void;
 }

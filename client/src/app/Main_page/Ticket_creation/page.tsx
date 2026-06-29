@@ -41,7 +41,6 @@ export default function CreateTicketPage() {
 
     setIsSubmitting(true);
 
-
     try {
       const response = await fetch(`${BASE_URL}/routes/tickets/create`,{
         method:"POST",
@@ -54,19 +53,25 @@ export default function CreateTicketPage() {
           arCategory:categoryMap[category],
           cost:cost        
         })
-      })
+      });
       
-      const ticketPayload = await response.json()
+      const ticketPayload = await response.json();
+
+      if (!response.ok) {
+        alert(isRTL ? `خطأ: ${ticketPayload.message}` : `Error: ${ticketPayload.message}`);
+        return;
+      }
 
       console.log("Structured Ticket Payload Saved Successfully:", ticketPayload);
       
-      // Temporary Success Feedback Loop Clear
       alert(isRTL ? "تم تسجيل بلاغ العطل بنجاح في المنظومة" : "Maintenance ticket logged successfully in tracking matrix.");
       setAsset("");
       setRoom("");
       setCost(0);
+      window.history.back(); // Go back to main page after success
     } catch (error) {
       console.error("Transmission failed:", error);
+      alert(isRTL ? "فشل إرسال البلاغ، يرجى المحاولة مرة أخرى" : "Failed to submit ticket, please try again");
     } finally {
       setIsSubmitting(false);
     }

@@ -1,6 +1,6 @@
 import { AdminViewProps } from "@/Types/tickets";
 
-export const AdminView = ({ tickets, isRTL, onApprove }: AdminViewProps) => {
+export const AdminView = ({ tickets, isRTL, onApprove, onResolve }: AdminViewProps) => {
   return (
     <div className="bg-white rounded-xl border border-[#E8ECEF] shadow-sm overflow-hidden">
       
@@ -25,7 +25,7 @@ export const AdminView = ({ tickets, isRTL, onApprove }: AdminViewProps) => {
               <th className="px-6 py-4 text-start">{isRTL ? "كود البلاغ" : "Ticket ID"}</th>
               <th className="px-6 py-4 text-start">{isRTL ? "العنصر المستهدف" : "Affected Asset"}</th>
               <th className="px-6 py-4 text-start">{isRTL ? "الموقع" : "Location"}</th>
-              <th className="px-6 py-4 text-start">{isRTL ? "حالة الفحص الخاص بك" : "Inspection Status"}</th>
+              <th className="px-6 py-4 text-start">{isRTL ? "الحالة" : "Status"}</th>
               <th className="px-6 py-4 text-start">{isRTL ? "الإجراء الفني" : "Technical Action"}</th>
             </tr>
           </thead>
@@ -36,21 +36,40 @@ export const AdminView = ({ tickets, isRTL, onApprove }: AdminViewProps) => {
                 <td className="px-6 py-4 font-medium">{ticket.asset}</td>
                 <td className="px-6 py-4 text-[#4A5568]">{ticket.room}</td>
                 <td className="px-6 py-4">
-                  <span className={`text-xs px-2.5 py-1 rounded-full font-bold ${ticket.adminApproved ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}`}>
-                    {ticket.adminApproved ? (isRTL ? "تم تأكيد فحص العطل" : "Specs Verified") : (isRTL ? "بحاجة لمعاينة فنية" : "Awaiting Audit")}
+                  <span className={`text-xs px-2.5 py-1 rounded-full font-bold ${
+                    ticket.status === "Resolved" 
+                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200" 
+                      : ticket.status === "In Progress" 
+                        ? "bg-blue-50 text-blue-700 border border-blue-200" 
+                        : "bg-amber-50 text-amber-700 border border-amber-200"
+                  }`}>
+                    {ticket.status === "Resolved" 
+                      ? (isRTL ? "تم إصلاحه" : "Resolved") 
+                      : ticket.status === "In Progress" 
+                        ? (isRTL ? "قيد الإصلاح" : "In Progress") 
+                        : (isRTL ? "معلق" : "Pending")}
                   </span>
                 </td>
-                <td className="px-6 py-4">
-                  {!ticket.adminApproved ? (
+                <td className="px-6 py-4 space-x-2">
+                  {ticket.status !== "Resolved" && !ticket.adminApproved && (
                     <button 
                       onClick={() => onApprove(ticket.id)} 
                       className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-1.5 px-3 rounded shadow-sm transition-colors hover:cursor-pointer"
                     >
-                      {isRTL ? "اعتماد الصيانة فنيًا ✓" : "Approve Technical Validity ✓"}
+                      {isRTL ? "اعتماد ✓" : "Approve ✓"}
                     </button>
-                  ) : (
+                  )}
+                  {ticket.status === "In Progress" && (
+                    <button 
+                      onClick={() => onResolve(ticket.id)} 
+                      className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-1.5 px-3 rounded shadow-sm transition-colors hover:cursor-pointer"
+                    >
+                      {isRTL ? "إكمال ✓" : "Resolve ✓"}
+                    </button>
+                  )}
+                  {ticket.status === "Resolved" && (
                     <span className="text-xs text-slate-400 font-medium italic">
-                      {isRTL ? "تم الإرسال للإدارة العليا" : "Sent to Principal Pipeline"}
+                      {isRTL ? "مكتمل" : "Completed"}
                     </span>
                   )}
                 </td>

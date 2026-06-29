@@ -44,12 +44,14 @@ router.post("/staff/login",authLimiter, validate(loginSchema, "Staff Login"), as
 
         // 4. Send cookie to frontend
         console.log(`[DEBUG] Setting authentication cookie for user: ${user.email}`);
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite:  (process.env.SAMESITE || "lax").toLowerCase(),
-            maxAge: 60 * 60 * 1000 // 1 hour
-        });
+        const isProd = process.env.NODE_ENV === "production";
+
+res.cookie('token', token, {
+    httpOnly: true,
+    secure: isProd ? true : false, // Must be true if sameSite is 'none'
+    sameSite: isProd ? "none" : "lax", // 'none' allows cross-domain cookies over HTTPS
+    maxAge: 60 * 60 * 1000 // 1 hour
+});
 
         console.log(`[INFO] Login process completed successfully for user: ${user.email}`);
         return res.status(200).json({ message: "Login successful" });

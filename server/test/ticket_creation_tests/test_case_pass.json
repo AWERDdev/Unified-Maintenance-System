@@ -1,7 +1,79 @@
+[
 {
-  "asset": "Projector Delta-5",
-  "room": "Lab 204",
+"asset": "Projector Delta-5",
+"room": "Lab 204",
+"category": "Hardware",
+"arCategory": "Maintenance",
+"cost": 1500
+},
+{
+  "asset": "Air Conditioning Unit Central Compressor",
+  "room": "Main Examination Hall",
+  "category": "Infrastructure",
+  "arCategory": "بنية تحتية",
+  "cost": 12500
+},
+{
+  "asset": "Interactive Whiteboard Smart-Touch 4K",
+  "room": "Physics Lab B",
   "category": "Hardware",
-  "arCategory": "Maintenance",
-  "cost": 1500
+  "arCategory": "أجهزة برمجية",
+  "cost": 4200
+},
+{
+  "asset": "Exposed Wire Junction Box Repair",
+  "room": "Chemistry Lab Prep Room",
+  "category": "Electrical",
+  "arCategory": "كهرباء",
+  "cost": 350
+},
+{
+  "asset": "Teacher Demonstration Desk and 30 Student Chairs",
+  "room": "Room 105",
+  "category": "Infrastructure",
+  "arCategory": "بنية تحتية",
+  "cost": 8500
+},
+{
+  "asset": "Cisco Core Network Switch (PoE Faulty)",
+  "room": "Server Closet - Admin Block",
+  "category": "Hardware",
+  "arCategory": "أجهزة برمجية",
+  "cost": 6100
+},
+{
+  "asset": "Leaking Main Water Valve and Piping",
+  "room": "Staff Restroom 2nd Floor",
+  "category": "Infrastructure",
+  "arCategory": "بنية تحتية",
+  "cost": 750
+},
+{
+  "asset": "Barcode Scanner and Inventory Thermal Printer",
+  "room": "Central Library Office",
+  "category": "Hardware",
+  "arCategory": "أجهزة برمجية",
+  "cost": 1200
+},
+{
+  "asset": "Fluorescent LED Tube Array Overhaul (12 Units)",
+  "room": "Gymnasium / Sports Hall",
+  "category": "Electrical",
+  "arCategory": "كهرباء",
+  "cost": 1800
+},
+{
+  "asset": "3D Printer Extruder Assembly & Heated Bed Replacement",
+  "room": "STEM Innovation Studio",
+  "category": "Hardware",
+  "arCategory": "أجهزة برمجية",
+  "cost": 3100
+},
+{
+  "asset": "Broken Window Glass Pane & Security Latch",
+  "room": "Room 312",
+  "category": "Infrastructure",
+  "arCategory": "بنية تحتية",
+  "cost": 900
 }
+]

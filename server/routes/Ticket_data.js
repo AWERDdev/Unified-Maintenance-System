@@ -96,7 +96,9 @@ router.get("/tickets/my", async (req, res) => {
         const user = await getAuthenticatedStaff(req, res);
         if (!user) return;
 
-        const tickets = await Ticket.find({ createdBy: user._id });
+        // Added .populate() here so teachers can also see their names/emails on their cards
+        const tickets = await Ticket.find({ createdBy: user._id })
+            .populate('createdBy', 'legal_name email');
 
         console.log(`[DEBUG] Found ${tickets.length} tickets for user: ${user.email}`);
         console.log("--- [DEBUG END] Success ---\n");
@@ -104,7 +106,6 @@ router.get("/tickets/my", async (req, res) => {
         return res.status(200).json(tickets);
     } catch (error) {
         console.error(`[DEBUG CRITICAL ERROR] Route execution crashed: ${error.stack || error}`);
-        console.log("--- [DEBUG END] Exception Raised ---\n");
         return res.status(500).json({ message: "Internal server error during ticket retrieval." });
     }
 });
@@ -115,42 +116,21 @@ router.get("/tickets/all", async (req, res) => {
         const user = await getAuthenticatedStaff(req, res);
         if (!user) return;
 
-        // 1. Define all roles allowed to see the global/school-wide ticket log
-        const allowedRoles = [
-            "Super Admin",
-            "Administrator", 
-            "IT Specialist", 
-            "Principal", 
-            "Vice Principal", 
-            "Teacher"
-        ];
-
+        const allowedRoles = ["Super Admin", "Administrator", "IT Specialist", "Principal", "Vice Principal", "Teacher"];
         if (!allowedRoles.includes(user.staff_Type)) { 
             return res.status(403).json({ message: "Unauthorized access to ticket registry." });
         }
 
-        // 2. Enforce School Isolation (Multi-Tenancy)
-        // Super Admin sees everything; everyone else only sees tickets from their own school
         let query = {};
-        if (user.staff_Type !== "Super Admin") {
-            query = { school: user.school }; 
-            console.log(`[DEBUG] Filtering tickets for school: ${user.school}`);
-        } else {
-            console.log("[DEBUG] Super Admin detected. Fetching global tickets across all schools.");
-        }
-
-        // 3. Fetch and populate
+        
+        // Populate links legal_name and email directly. Date is a flat field on the ticket model.
         const tickets = await Ticket.find(query)
-            .populate('createdBy', 'legal_name email school');
+            .populate('createdBy', 'legal_name email');
 
         console.log(`[DEBUG] Found ${tickets.length} tickets for role [${user.staff_Type}]`);
-        console.log("--- [DEBUG END] Success ---\n");
-
         return res.status(200).json(tickets);
-
     } catch (error) {
         console.error(`[DEBUG CRITICAL ERROR] Route execution crashed: ${error.stack || error}`);
-        console.log("--- [DEBUG END] Exception Raised ---\n");
         return res.status(500).json({ message: "Internal server error during ticket retrieval." });
     }
 });

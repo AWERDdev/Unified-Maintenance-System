@@ -46,13 +46,6 @@ const ticketSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  
-  school: {
-    type: String,
-    required: true,
-    index: true // Indexing this makes school-wide queries incredibly fast
-  },
-  
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'staff',

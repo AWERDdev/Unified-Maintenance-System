@@ -1,16 +1,21 @@
-export interface Ticket  {
+// inside @/Types/tickets.ts
+export interface Ticket {
   id: string;
   asset: string;
   room: string;
   category: string;
-  status: 'Pending' | 'In Progress' | 'Resolved'; // String literal union for tighter control
-  date: string;
+  status: 'Pending' | 'In Progress' | 'Resolved';
+  date: string; // The flat date property on the ticket schema
   arCategory: string;
   adminApproved: boolean;
   principalFunded: boolean;
   cost: number;
+  createdBy: {
+    _id: string;
+    legal_name: string;
+    email: string;
+  };
 }
-
 export interface TeacherViewProps {
   tickets: Ticket[];
   isRTL: boolean;

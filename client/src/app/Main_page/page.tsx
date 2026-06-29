@@ -1,166 +1,139 @@
 'use client'
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/tools/LanguageHandler";
-import { contentDict } from "@/Dict/Content_DICT";
+// import { contentDict } from "@/Dict/Content_DICT";
 import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
 import { isAUTH } from "@/tools/verfiy_user";
 import { Ticket } from "@/Types/tickets";
 import { useRouter } from "next/navigation";
 
-// 1. Importing your modular dashboard views
+// Importing modular dashboard views
 import { TeacherView } from "@/components/Teacher_view";
 import { AdminView } from "@/components/Admin_view";
 import { PrincipalView } from "@/components/PrincipalFunding_View";
 import { BASE_URL } from "@/tools/API_handler";
 import { ROUTES } from "@/Types/Routing";
 
-const initialTickets: Ticket[]= [
-  { 
-    id: "TK-9402", 
-    asset: "مكتب معمل الحاسب الآلي", 
-    room: "Lab A", 
-    category: "Infrastructure", 
-    status: "Pending", 
-    date: "2026-06-14", 
-    arCategory: "بنية تحتية",
-    adminApproved: false,
-    principalFunded: false,
-    cost:500
-  },
-  { 
-    id: "TK-8831", 
-    asset: "جهاز عرض الإسقاط (Projector)", 
-    room: "Room 302", 
-    category: "Hardware", 
-    status: "In Progress", 
-    date: "2026-06-12", 
-    arCategory: "أجهزة برمجية",
-    adminApproved: true,
-    principalFunded: false,
-    cost:500
-  },
-  { 
-    id: "TK-7429", 
-    asset: "إضاءة غرفة الاختبارات الرئيسية", 
-    room: "Main Hall", 
-    category: "Electrical", 
-    status: "Resolved", 
-    date: "2026-06-10", 
-    arCategory: "كهرباء",
-    adminApproved: true,
-    principalFunded: true,
-    cost:500
-  },
-];
+// 1. Import your frontend fetch handlers
+import { Fetch_tickets_my, Fetch_tickets_all } from "@/tools/Fetch_tickets"; // Adjust this path to your actual file layout
 
 export default function MainPage() {
-  const router = useRouter()
+  const router = useRouter();
   const { lang } = useLanguage();
   const isRTL = lang === 'ar';
   
-  const [tickets, setTickets] = useState(initialTickets);
+  // Initialize with an empty array since data is now live
+  const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [staffType, setStaffType] = useState<
-  | "Principal"
-  | "Vice Principal"
-  | "Teacher"
-  | "Administrator"
-  | "School Counselor"
-  | "IT Specialist"
-  | "Librarian"
-  | "Teacher Assistant"
-  | "Academic Coordinator"
->("Teacher");
+    | "Super Admin"
+    | "Principal"
+    | "Vice Principal"
+    | "Teacher"
+    | "Administrator"
+    | "School Counselor"
+    | "IT Specialist"
+    | "Librarian"
+    | "Teacher Assistant"
+    | "Academic Coordinator"
+  >("Teacher");
   
-  // New state added to hold school metadata context dynamically
   const [schoolName, setSchoolName] = useState<string>("Al-Najah Secondary School");
-useEffect(() => {
-  const checkUser = async () => {
-    console.log("🔍 [DEBUG] Executing checkUser...");
-    const authStatus = await isAUTH();
-    console.log("🔍 [DEBUG] authStatus received:", authStatus);
-    
-    if (!authStatus.authenticated) {
-      console.warn("⚠️ [DEBUG] Validation failed. Redirecting to:", ROUTES.Staff_Login);
-      window.location.href = ROUTES.Staff_Login; 
-      return; // Stop execution if unauthorized
-    }
 
-    try {
-      const targetUrl = `${BASE_URL}/routes/fetch/status`;
-      console.log(`🌐 [DEBUG] Fetching payload from target URL: ${targetUrl}`);
-
-      const response = await fetch(targetUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', 
-      });
-
-      console.log(`🌐 [DEBUG] HTTP Status Code returned: ${response.status} (${response.statusText})`);
-
-      // FIX 1: Stop execution immediately if the server didn't respond with a 200 OK status
-      if (!response.ok) {
-        console.error("Failed to fetch data from status endpoint, status code:", response.status);
-        setLoading(false);
+  useEffect(() => {
+    const checkUserAndFetchTickets = async () => {
+      console.log("🔍 [DEBUG] Executing checkUserAndFetchTickets...");
+      const authStatus = await isAUTH();
+      
+      if (!authStatus.authenticated) {
+        console.warn("⚠️ [DEBUG] Validation failed. Redirecting to:", ROUTES.Staff_Login);
+        window.location.href = ROUTES.Staff_Login; 
         return; 
       }
-      
-      const data = await response.json();
-      console.log("📦 [DEBUG] Raw parsed json data received:", data);
-      console.log("📦 [DEBUG] Type of data received:", typeof data);
 
-      // FIX 2: Validate that data actually returned something readable before assigning properties
-      if (!data) {
-        console.warn("User data payload returned empty from server.");
+      try {
+        const targetUrl = `${BASE_URL}/routes/fetch/status`;
+        const response = await fetch(targetUrl, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include', 
+        });
+
+        if (!response.ok) {
+          console.error("Failed to fetch user permissions configuration profile status, code:", response.status);
+          setLoading(false);
+          return; 
+        }
+        
+        const data = await response.json();
+        if (!data) {
+          console.warn("User profile parsing fallback completed empty.");
+          setLoading(false);
+          return;
+        }
+
+        // Set local identity states
+        const activeSchool = data.staff_school || "Al-Najah Secondary School";
+        const activeRole = data.staff_type || "Teacher";
+        
+        setSchoolName(activeSchool);
+        setStaffType(activeRole);
+
+        // 2. Fetch data based on role configuration logic
+        let fetchedTickets: Ticket[] | null = null;
+
+        // Roles that have authorization to view all tickets within the school scope
+        const elevatedRoles = [
+          "Super Admin",
+          "Administrator",
+          "IT Specialist",
+          "Principal",
+          "Vice Principal",
+          "Teacher" // Per your specification to allow tracking their ticket pipeline
+        ];
+
+        if (elevatedRoles.includes(activeRole)) {
+          console.log(`📊 [DEBUG] Role [${activeRole}] is elevated. Dispatching global school pipeline fetch...`);
+          fetchedTickets = await Fetch_tickets_all();
+        } else {
+          console.log(`🔒 [DEBUG] Role [${activeRole}] is restricted. Dispatching self-scoped ticket fetch...`);
+          fetchedTickets = await Fetch_tickets_my();
+        }
+
+        if (fetchedTickets) {
+          setTickets(fetchedTickets);
+        }
+
         setLoading(false);
-        return;
+      } catch (error) {
+        console.error(`Network or Parsing error encountered during bootstrap phase: ${error}`);
+        setLoading(false);
       }
+    };
 
-      console.log(`📝 [DEBUG] Attempting state writes -> staff_school: "${data.staff_school}", staff_type: "${data.staff_type}"`);
+    checkUserAndFetchTickets();
+  }, []);
 
-      // Safe to assign now
-      setSchoolName(data.staff_school || "Al-Najah Secondary School");
-      setStaffType(data.staff_type || "teacher");
-      
-      console.log("✅ [DEBUG] State values dispatched. Flipping loading state to false.");
-      setLoading(false);
-
-    } catch (error) {
-      console.error(`Network or Parsing error encountered: ${error}`);
-      setLoading(false);
-    }
-  };
-
-  checkUser();
-}, []);
   const pendingCount = tickets.filter(t => t.status === 'Pending').length;
   const inProgressCount = tickets.filter(t => t.status === 'In Progress').length;
   const resolvedCount = tickets.filter(t => t.status === 'Resolved').length;
 
-  const approveTicket = () =>{
-    console.log("approved")
-  }
-  const approveFunding = () =>{
-    console.log("approved")
-  }
+  const approveTicket = () => { console.log("Ticket structural state updated to Approved") };
+  const approveFunding = () => { console.log("Ticket funding execution successfully resolved") };
 
-  if (loading) return <div>Checking permissions...</div>;
+  if (loading) return <div className="p-8 text-center text-sm font-semibold tracking-wide text-slate-500">Checking terminal authorization properties...</div>;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
-      {/* Header */}
       <header className="w-full sticky top-0 z-50">
         <NavBarAUTH />
       </header>
 
-      {/* Main Dashboard Control Container */}
       <main className="grow max-w-7xl w-full mx-auto px-4 py-8 md:py-12 space-y-8">
         
-        {/* Dashboard Title & Meta Context */}
+        {/* Title Block */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-[#E8ECEF] pb-6 gap-4">
           <div className="space-y-3">
             <div>
@@ -172,7 +145,6 @@ useEffect(() => {
               </p>
             </div>
 
-            {/* School / Registered Affiliation Badge Element */}
             <div className="inline-flex items-center gap-2 bg-[#EEF2F6] text-[#0B2545] text-xs font-semibold px-3 py-1.5 rounded-md border border-[#E2E8F0]">
               <svg className="w-3.5 h-3.5 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
@@ -183,19 +155,18 @@ useEffect(() => {
             </div>
           </div>
           
-          {/* Action Trigger for adding a ticket */}
-   {/* Action Trigger for adding a ticket */}
-{["Administrator", "IT Specialist"].includes(staffType) && (
-  <button 
-  className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto hover:cursor-pointer"
-  onClick={ () => router.push(ROUTES.Ticket_creation_page) }
-  >
-    {isRTL ? "+ تسجيل بلاغ عطل جديد" : "+ File New Asset Ticket"}
-  </button>
-)}
+          {/* Action Trigger for file creation — Visible to structural roles */}
+          {["Super Admin", "Administrator", "IT Specialist", "Teacher"].includes(staffType) && (
+            <button 
+              className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto hover:cursor-pointer"
+              onClick={() => router.push(ROUTES.Ticket_creation_page)}
+            >
+              {isRTL ? "+ تسجيل بلاغ ععل جديد" : "+ File New Asset Ticket"}
+            </button>
+          )}
         </div>
 
-        {/* Executive Metric Cards Overview */}
+        {/* Metric Cards Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
@@ -222,27 +193,23 @@ useEffect(() => {
           </div>
         </div>
 
-        {/* Conditional Sub-Component Router Interface Segment */}
-      <div className="w-full mt-4">
-  {/* 1. Principal & Funding Management Dashboard Segment */}
-  {["Principal", "Vice Principal"].includes(staffType) && (
-    <PrincipalView tickets={tickets} isRTL={isRTL} onFund={approveFunding} />
-  )}
-  
-  {/* 2. Administrative & Infrastructure Operations Dashboard Segment */}
-  {["Administrator", "IT Specialist"].includes(staffType) && (
-    <AdminView tickets={tickets} isRTL={isRTL} onApprove={approveTicket} />
-  )}
-  
-  {/* 3. Academic staff, Teachers, and General Support Portal Segment */}
-  {["Teacher", "School Counselor", "Librarian", "Teacher Assistant", "Academic Coordinator"].includes(staffType) && (
-    <TeacherView tickets={tickets} isRTL={isRTL} />
-  )}
-</div>
+        {/* UI Sub-Component Routing Grid */}
+        <div className="w-full mt-4">
+          {["Principal", "Vice Principal"].includes(staffType) && (
+            <PrincipalView tickets={tickets} isRTL={isRTL} onFund={approveFunding} />
+          )}
+          
+          {["Super Admin", "Administrator", "IT Specialist"].includes(staffType) && (
+            <AdminView tickets={tickets} isRTL={isRTL} onApprove={approveTicket} />
+          )}
+          
+          {["Teacher", "School Counselor", "Librarian", "Teacher Assistant", "Academic Coordinator"].includes(staffType) && (
+            <TeacherView tickets={tickets} isRTL={isRTL} />
+          )}
+        </div>
 
       </main>
 
-      {/* Footer */}
       <Fotter1 />
     </div>
   );

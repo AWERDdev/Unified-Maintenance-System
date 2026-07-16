@@ -1,7 +1,7 @@
-'use client'
+'use client';
+
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/tools/LanguageHandler";
-// import { contentDict } from "@/Dict/Content_DICT";
 import { NavBarAUTH } from "@/components/Navbar";
 import { Fotter1 } from "@/components/Fotter";
 import { isAUTH } from "@/tools/verfiy_user";
@@ -15,15 +15,14 @@ import { PrincipalView } from "@/components/PrincipalFunding_View";
 import { BASE_URL } from "@/tools/API_handler";
 import { ROUTES } from "@/Types/Routing";
 
-// 1. Import your frontend fetch handlers
-import { Fetch_tickets_my, Fetch_tickets_all, Update_ticket_approval, Resolve_ticket } from "@/tools/Fetch_tickets"; // Adjust this path to your actual file layout
+// Fetch handlers
+import { Fetch_tickets_my, Fetch_tickets_all, Update_ticket_approval, Resolve_ticket } from "@/tools/Fetch_tickets";
 
 export default function MainPage() {
   const router = useRouter();
   const { lang } = useLanguage();
   const isRTL = lang === 'ar';
   
-  // Initialize with an empty array since data is now live
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -44,11 +43,9 @@ export default function MainPage() {
 
   useEffect(() => {
     const checkUserAndFetchTickets = async () => {
-      console.log("🔍 [DEBUG] Executing checkUserAndFetchTickets...");
       const authStatus = await isAUTH();
       
       if (!authStatus.authenticated) {
-        console.warn("⚠️ [DEBUG] Validation failed. Redirecting to:", ROUTES.Staff_Login);
         window.location.href = ROUTES.Staff_Login; 
         return; 
       }
@@ -62,43 +59,36 @@ export default function MainPage() {
         });
 
         if (!response.ok) {
-          console.error("Failed to fetch user permissions configuration profile status, code:", response.status);
           setLoading(false);
           return; 
         }
         
         const data = await response.json();
         if (!data) {
-          console.warn("User profile parsing fallback completed empty.");
           setLoading(false);
           return;
         }
 
-        // Set local identity states
         const activeSchool = data.staff_school || "Al-Najah Secondary School";
         const activeRole = data.staff_type || "Teacher";
         
         setSchoolName(activeSchool);
         setStaffType(activeRole);
 
-        // 2. Fetch data based on role configuration logic
         let fetchedTickets: Ticket[] | null = null;
 
-        // Roles that have authorization to view all tickets within the school scope
         const elevatedRoles = [
           "Super Admin",
           "Administrator",
           "IT Specialist",
           "Principal",
           "Vice Principal",
-          "Teacher" // Per your specification to allow tracking their ticket pipeline
+          "Teacher"
         ];
 
         if (elevatedRoles.includes(activeRole)) {
-          console.log(`📊 [DEBUG] Role [${activeRole}] is elevated. Dispatching global school pipeline fetch...`);
           fetchedTickets = await Fetch_tickets_all();
         } else {
-          console.log(`🔒 [DEBUG] Role [${activeRole}] is restricted. Dispatching self-scoped ticket fetch...`);
           fetchedTickets = await Fetch_tickets_my();
         }
 
@@ -108,7 +98,7 @@ export default function MainPage() {
 
         setLoading(false);
       } catch (error) {
-        console.error(`Network or Parsing error encountered during bootstrap phase: ${error}`);
+        console.error(`Initialization error: ${error}`);
         setLoading(false);
       }
     };
@@ -141,7 +131,13 @@ export default function MainPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-center text-sm font-semibold tracking-wide text-slate-500">Checking terminal authorization properties...</div>;
+  if (loading) {
+    return (
+      <div className="p-8 text-center text-sm font-semibold tracking-wide text-slate-500">
+        {isRTL ? "جاري التحقق من الحساب..." : "Checking account status..."}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
@@ -156,10 +152,10 @@ export default function MainPage() {
           <div className="space-y-3">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold text-[#0B2545]">
-                {isRTL ? "لوحة التحكم في بلاغات صيانة المنشآت" : "Facility Maintenance Escalation Terminal"}
+                {isRTL ? "لوحة التحكم في طلبات الصيانة" : "School Maintenance Dashboard"}
               </h1>
               <p className="text-sm text-[#4A5568] mt-1">
-                {isRTL ? "إدارة وتتبع أعطال البنية التحتية والأجهزة داخل المدرسة" : "Track structural failures and hardware ticket lifecycles"}
+                {isRTL ? "تتبع وإدارة طلبات الصيانة والأعطال في المدرسة" : "Track and manage school maintenance requests"}
               </p>
             </div>
 
@@ -168,18 +164,18 @@ export default function MainPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
               </svg>
               <span>
-                {isRTL ? `المؤسسة الحالية: ${schoolName}` : `Affiliation: ${schoolName}`}
+                {isRTL ? `المدرسة: ${schoolName}` : `School: ${schoolName}`}
               </span>
             </div>
           </div>
           
-          {/* Action Trigger for file creation — Visible to structural roles */}
+          {/* Action Trigger */}
           {["Super Admin", "Administrator", "IT Specialist", "Teacher"].includes(staffType) && (
             <button 
               className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto hover:cursor-pointer"
               onClick={() => router.push(ROUTES.Ticket_creation_page)}
             >
-              {isRTL ? "+ تسجيل بلاغ ععل جديد" : "+ File New Asset Ticket"}
+              {isRTL ? "+ إرسال طلب جديد" : "+ Report New Issue"}
             </button>
           )}
         </div>
@@ -188,7 +184,7 @@ export default function MainPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "البلاغات المعلقة" : "Pending Action"}</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "طلبات معلقة" : "Pending"}</p>
               <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">{pendingCount}</h3>
             </div>
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
@@ -196,7 +192,7 @@ export default function MainPage() {
 
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "قيد الإصلاح" : "Under Maintenance"}</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "قيد التنفيذ" : "In Progress"}</p>
               <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">{inProgressCount}</h3>
             </div>
             <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
@@ -204,7 +200,7 @@ export default function MainPage() {
 
           <div className="bg-white p-5 rounded-xl border border-[#E8ECEF] shadow-sm flex items-center justify-between">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "تمت صيانته" : "Resolved Items"}</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-[#4A5568]">{isRTL ? "مكتملة" : "Resolved"}</p>
               <h3 className="text-2xl font-extrabold text-[#0B2545] mt-1">{resolvedCount}</h3>
             </div>
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />

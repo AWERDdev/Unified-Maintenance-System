@@ -28,7 +28,7 @@ password: {
   type: String,
   required: true,
   select: false, // <-- CRITICAL FOR SECURITY
-  minlength: 8,  // <-- Basic validation safety net
+  minlength: 8,  
 },
   staff_Type:{
     type: String,

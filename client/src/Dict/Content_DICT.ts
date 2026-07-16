@@ -24,7 +24,7 @@ export const contentDict: Record<string, TranslationKeys> = {
     hero: {
       title: "Unified Maintenance Escalation System",
       subtitle: "A simple, centralized platform to report school maintenance issues, track infrastructure problems, and dispatch technical requests quickly.",
-      getStarted: "Get Started",
+      getStarted: "Report an Issue",
       learnMore: "Learn More"
     },
     
@@ -110,8 +110,8 @@ export const contentDict: Record<string, TranslationKeys> = {
     // 2. واجهة العرض الرئيسية للمنصة
     hero: {
       title: "منظومة بلاغات الصيانة الموحدة",
-      subtitle: "منصة رقمية سهلة وموحدة للإبلاغ عن أعطال المدارس، وتتبع المشاكل، وإرسال طلبات الصيانة بشكل سريع ومباشر.",
-      getStarted: "ابدأ الآن",
+      subtitle: "منصة رقمية للإبلاغ عن أعطال المدارس، وتتبع المشاكل، وإرسال طلبات الصيانة بشكل سريع ومباشر.",
+      getStarted: "إبلاغ عن عطل",
       learnMore: "اعرف المزيد"
     },
     

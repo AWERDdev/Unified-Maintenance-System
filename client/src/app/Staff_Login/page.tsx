@@ -142,14 +142,14 @@ export default function StaffLoginPage() {
               </div>
 
               <div className="flex items-center justify-between text-xs pt-1">
-                <label className="flex items-center gap-2 cursor-pointer text-[#4A5568]">
+                {/* <label className="flex items-center gap-2 cursor-pointer text-[#4A5568]">
                   <input type="checkbox" className="w-4 h-4 cursor-pointer accent-[#0B2545] rounded" />
                   <span>{t.loginForm.labels.rememberMe}</span>
                 </label>
-                
-                <a href="#forgot" className="text-[#B0926A] font-medium hover:underline">
+                 */}
+                {/* <a href="#forgot" className="text-[#B0926A] font-medium hover:underline">
                   {t.loginForm.labels.forgotPassword}
-                </a>
+                </a> */}
               </div>
 
               <button 

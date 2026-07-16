@@ -26,6 +26,15 @@
       "password": "AdminSystemClearance456!",
       "phone": "01556789012"
     },
+      {
+    "national_id": "28810051403456",
+    "legal_name": "Mona Mansour",
+    "phone": "01187654321",
+    "staff_Type": "Principal",
+    "email": "mona.mansour@future-intl.edu.eg",
+    "password": "CounselorSupport987!",
+    "school": "Future International School"
+  },
     {
       "national_id": "29108040209876",
       "legal_name": "Tarek El-Sayed",

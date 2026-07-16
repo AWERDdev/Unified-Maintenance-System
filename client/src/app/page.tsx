@@ -39,7 +39,7 @@ const IntroPage = () => {
             {/* Primary & Secondary Call to Actions */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
               <button 
-                onClick={() => router.push(ROUTES.Staff_Signup)}
+                onClick={() => router.push(ROUTES.Staff_Login)}
                 className="bg-[#0B2545] text-white font-semibold text-lg px-8 py-3.5 rounded-lg shadow-md hover:bg-[#13355e] transition-all duration-200 cursor-pointer"
               >
                 {t.hero.getStarted}

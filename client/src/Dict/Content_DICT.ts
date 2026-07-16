@@ -5,12 +5,6 @@ import { TranslationKeys } from "@/Types/TranslationKey";
  * UMES - Unified Maintenance Escalation System (منظومة بلاغات الصيانة الموحدة)
  * Global Localization Dictionary Sheet
  * ============================================================================
- * * Structural Blueprint Layout Guide:
- * 1. Global Navigation Headers & System Triggers
- * 2. Landing Core Hero Information Panel
- * 3. Formal Executive About Page Context Blocks
- * 4. Structural Validation Terminals (Signup / Login Layout Sheets)
- * 5. Global Standard Layout Footers
  */
 
 export const contentDict: Record<string, TranslationKeys> = {
@@ -20,84 +14,84 @@ export const contentDict: Record<string, TranslationKeys> = {
   en: {
     // 1. Navigation Header Controls
     nav: { 
-      signup: "Staff Registration", 
-      login: "Staff Portal Login", 
-      about: "Platform Architecture",
-      profile: "Personnel Profile Data"
+      signup: "Sign Up", 
+      login: "Login", 
+      about: "About",
+      profile: "Profile"
     },
     
     // 2. Landing Frame Hero Interface
     hero: {
       title: "Unified Maintenance Escalation System",
-      subtitle: "The centralized digital tracking pipeline designed to monitor physical assets, escalate structural facility failures, and dispatch technical requests across school infrastructure.",
-      getStarted: "Access System Dashboard",
-      learnMore: "Review System Specifications"
+      subtitle: "A simple, centralized platform to report school maintenance issues, track infrastructure problems, and dispatch technical requests quickly.",
+      getStarted: "Get Started",
+      learnMore: "Learn More"
     },
     
     // 3. Technical System Documentation / About Block
-    aboutTitle: "About the UMES Platform",
-    aboutSubtitle: "Secure National Asset Management & Logistics Escalation Engine",
-    section1Title: "Functional Operational Purpose",
-    section1Desc: "UMES was developed to eliminate manual administrative paperwork, ledger loss, and structural communication bottlenecks within Egyptian school facilities. By allowing personnel to securely log infrastructure failures directly through their checked accounts, the platform tracks incident priority queues, monitors equipment depreciation records, and streamlines maintenance dispatch times.",
-    section2Title: "Zero-Trust System Security Layer",
-    section2Desc: "Designed with security at its foundation, the system completely isolates data streams to prevent cross-institution indexing. It features rigid parameter validation bounds against payload injections, comprehensive protection preventing unauthorized access token manipulation, and monospaced session execution verification logging to keep administrative data highly secured.",
-    techStack: "Core Architecture Blueprint",
+    aboutTitle: "About UMES",
+    aboutSubtitle: "Fast, secure, and reliable school asset and maintenance tracking",
+    section1Title: "Why UMES?",
+    section1Desc: "UMES was built to replace slow paperwork and lost logs in Egyptian schools. School staff can easily report maintenance issues as they happen, helping maintenance teams prioritize requests and fix problems faster.",
+    section2Title: "Built-In Security",
+    section2Desc: "We take data privacy seriously. The platform keeps school data separated, secures your login credentials, prevents unauthorized access, and maintains secure logs to keep school information safe.",
+    techStack: "Tech Stack & Architecture",
     
-    // 4. Secure Account Creation Terminal (Fits your current Signup Form)
+    // 4. Account Creation Form
     signupForm: {
-      subtitle: "Personnel identity verification checkpoint",
+      subtitle: "Create your staff account",
       labels: {
-        fullName: "Full Legal Name (Matching National ID)",
-        nationalId: "National Identification Number (14 Digits)",
-        phone: "Official Mobile Number",
-        password: "Account Access Password",
-        confirmPassword: "Re-enter Security Password",
-        selectStaffType: "Select Personnel Classification Role",
-        email: "Official Ministry Email Address"
+        fullName: "Full Name (as on your National ID)",
+        nationalId: "National ID (14 digits)",
+        phone: "Mobile Number",
+        password: "Password",
+        confirmPassword: "Confirm Password",
+        selectStaffType: "Select Your Role",
+        email: "Ministry Email Address"
       },
       placeholders: {
         fullName: "e.g., Ahmed Mohamed Mansour",
         phone: "e.g., 01xxxxxxxxx",
         email: "username@moe.edu.eg"
       },
-      disclaimer: "By confirming registration parameters, you certify that your identity matches the verified personnel register of the educational directorate.",
-      submitBtn: "Initialize Secure Account Credentials",
-      hasAccount: "Already possess an active personnel profile?",
+      disclaimer: "By signing up, you confirm that you are a registered employee under the Ministry of Education and that your details are accurate.",
+      submitBtn: "Create Account",
+      hasAccount: "Already have an account?",
       select: {
-        Teacher_staff_option: "Academic Educator / Teacher / Staff",
-        IT_Administrator_option: "IT Infrastructure Admin",
-        Principal_option: "School Principal / Executive Director",
-        Vice_Principal_option: "School Vice Principal / Operational Director"
+        Teacher_staff_option: "Teacher / Staff Member",
+        IT_Administrator_option: "IT Administrator",
+        Principal_option: "School Principal",
+        Vice_Principal_option: "Vice Principal"
       },
-      teacher_code: "Official Ministry Teacher Verification Code"
+      teacher_code: "Ministry Teacher Code"
     },
     
-    // 5. Authorative Login Access Form (Fits your current Login Form)
+    // 5. Login Access Form
     loginForm: {
-      subtitle: "Administrative gateway clearance check",
+      subtitle: "Log in to your account",
       labels: {
-        nationalId: "National Identification Number (14 Digits)",
-        password: "System Password",
-        rememberMe: "Maintain active session token",
-        forgotPassword: "Reset credentials parameters?"
+        nationalId: "National ID (14 digits)",
+        password: "Password",
+        rememberMe: "Remember me",
+        forgotPassword: "Forgot password?"
       },
-      submitBtn: "Authorize Account Clearance",
-      noAccount: "Do not have an authorized profile assigned yet?"
+      submitBtn: "Log In",
+      noAccount: "Don't have an account yet?"
     },
 
     profilePage: {
-      title: "Personnel Profile Registry",
-      subtitle: "Verified staff identity and institutional affiliation record",
-      logoutBtn: "Terminate Active Session",
-      loading: "Verifying personnel credentials...",
-      error: "Unable to retrieve profile data. Please try again later.",
-      memberSince: "Account Registered",
-      schoolAffiliation: "Institutional Affiliation"
+      title: "My Profile",
+      subtitle: "Your verified account and school details",
+      logoutBtn: "Log Out",
+      loading: "Loading your profile...",
+      error: "Couldn't load profile. Please try again.",
+      memberSince: "Member Since",
+      schoolAffiliation: "School / Institution"
     },
 
     // 6. Global Layout Footer Elements
     footer: { 
-      rights: "© 2026 Unified Maintenance Escalation System. All administrative rights reserved." 
+      rights: "© 2026 Unified Maintenance Escalation System. All rights reserved." 
     }
   },
 
@@ -107,84 +101,84 @@ export const contentDict: Record<string, TranslationKeys> = {
   ar: {
     // 1. القائمة العلوية والتحكم في النظام
     nav: { 
-      signup: "تسجيل الموظفين والإداريين", 
-      login: "بوابة دخول الكادر الإداري", 
-      about: "مواصفات المنظومة الرقمية",
-      profile: "الملف الشخصي للموظف"
+      signup: "إنشاء حساب", 
+      login: "تسجيل الدخول", 
+      about: "عن المنظومة",
+      profile: "الملف الشخصي"
     },
     
     // 2. واجهة العرض الرئيسية للمنصة
     hero: {
-      title: "منظومة بلاغات الصيانة الموحدة للمدارس",
-      subtitle: "المنصة الرقمية المركزية لإدارة العهدة، تتبع الأصول الفيزيائية، وتصعيد بلاغات أعطال البنية التحتية فورياً لتقليص البيروقراطية داخل المؤسسات التعليمية.",
-      getStarted: "لوحة التحكم المركزية",
-      learnMore: "دليل المواصفات الفنية"
+      title: "منظومة بلاغات الصيانة الموحدة",
+      subtitle: "منصة رقمية سهلة وموحدة للإبلاغ عن أعطال المدارس، وتتبع المشاكل، وإرسال طلبات الصيانة بشكل سريع ومباشر.",
+      getStarted: "ابدأ الآن",
+      learnMore: "اعرف المزيد"
     },
     
     // 3. التوثيق الفني والتعريف بالنظام
-    aboutTitle: "عن منظومة البلاغات الرقمية الموحدة",
-    aboutSubtitle: "المحرك الوطني الآمن لتتبع الأصول المدرسية وجدولة الإصلاحات العاجلة",
-    section1Title: "الهدف والضرورة التشغيلية",
-    section1Desc: "تم تطوير هذه المنظومة للقضاء تماماً على المعاملات الورقية التقليدية، وضياع الدفاتر، وتأخر عمليات الإصلاح داخل المنشآت التعليمية المصرية. تتيح المنصة للكادر التعليمي والإداري تسجيل أعطال غرف المعامل والفصول فور حدوثها، مما يضمن تصنيف الأولويات بدقة ومتابعة كفاءة الأجهزة وسرعة استجابة فنيي الصيانة.",
-    section2Title: "الحماية الأمنية المتقدمة للهيكل البرمجي",
-    section2Desc: "بخلاف الأنظمة التقليدية، تعتمد المنظومة على عزل تام لبيانات المنشآت لمنع التداخل أو تسريب المعلومات الإدارية. تتميز المنصة بآليات تحقق صارمة من هوية المستخدم تمنع التلاعب بالصلاحيات، وتصفية دقيقة للمدخلات البرمجية ضد الاختراقات، مع الاحتفاظ بسجل عمليات مشفر يوضح كافة التحركات الإدارية داخل النظام.",
-    techStack: "الهيكل التقني للبنية الأساسية",
+    aboutTitle: "عن منظومة UMES",
+    aboutSubtitle: "نظام آمن وسريع لتتبع وإصلاح أعطال المنشآت التعليمية",
+    section1Title: "لماذا تم تطوير المنظومة؟",
+    section1Desc: "تم تصميم هذه المنصة للتخلص من المعاملات الورقية التقليدية وضياع دفاتر الصيانة في المدارس المصرية. تتيح المنظومة للمعلمين والإداريين الإبلاغ عن أي عطل فور حدوثه، مما يساعد فريق الصيانة على تحديد الأولويات وسرعة الاستجابة.",
+    section2Title: "أمان كامل لبياناتك",
+    section2Desc: "نهتم بخصوصية وأمان بيانات المدارس، حيث تعتمد المنظومة على عزل البيانات لحماية الخصوصية، وتأمين حسابات المستخدمين لمنع الوصول غير المصرح به، مع تسجيل آمن لكل العمليات لضمان حماية المعلومات.",
+    techStack: "البنية البرمجية والتقنيات المستخدمة",
     
     // 4. نموذج إنشاء حساب جديد للكادر الإداري والتعليمي
     signupForm: {
-      subtitle: "نافذة التحقق من الهوية الرقمية للموظفين",
+      subtitle: "إنشاء حساب جديد للموظفين",
       labels: {
-        fullName: "الاسم رباعي بالكامل (كما هو مدون بالبطاقة الشخصية)",
-        nationalId: "الرقم القومي للموظف (١٤ رقم)",
-        phone: "رقم الهاتف المحمول المعتمد",
-        password: "كلمة مرور الحساب الجديدة",
-        confirmPassword: "إعادة تأكيد كلمة المرور المقترحة",
-        selectStaffType: "اختر الصفة الوظيفية للكادر الإداري",
-        email: "البريد الإلكتروني الوزاري المعتمد"
+        fullName: "الاسم رباعي (كما هو في بطاقة الرقم القومي)",
+        nationalId: "الرقم القومي (١٤ رقم)",
+        phone: "رقم الموبايل",
+        password: "كلمة المرور",
+        confirmPassword: "تأكيد كلمة المرور",
+        selectStaffType: "اختر الصفة الوظيفية",
+        email: "البريد الإلكتروني الوزاري"
       },
       placeholders: {
         fullName: "مثال: أحمد محمد منصور",
         phone: "مثال: ٠١xxxxxxxxx",
         email: "username@moe.edu.eg"
       },
-      disclaimer: "بالضغط على إنشاء الحساب، فإنك تقر بأنك موظف مقيد بقطاع التربية والتعليم وأن كافة البيانات المدخلة تطابق السجلات الرسمية للأحوال المدنية.",
-      submitBtn: "إنشاء وتسجيل الحساب المعتمد",
-      hasAccount: "هل لديك حساب إداري مسجل بالفعل على المنصة؟",
+      disclaimer: "بالضغط على إنشاء الحساب، فإنك تؤكد أنك موظف مقيد بوزارة التربية والتعليم وأن كافة البيانات المدخلة صحيحة.",
+      submitBtn: "إنشاء حساب",
+      hasAccount: "لديك حساب بالفعل؟",
       select: {
-        Teacher_staff_option: "معلم / كادر تعليمي / عمال",
-        IT_Administrator_option: "مسؤول تطوير تكنولوجي / شبكات",
-        Principal_option: "مدير المنشأة التعليمية",
-        Vice_Principal_option: "ناظر المدرسة / كادر إداري تشغيلي"
+        Teacher_staff_option: "معلم / كادر تعليمي / عامل",
+        IT_Administrator_option: "مسؤول تطوير تكنولوجي",
+        Principal_option: "مدير المدرسة",
+        Vice_Principal_option: "وكيل المدرسة"
       },
-      teacher_code: "كود المعلم الوزاري المعتمد"
+      teacher_code: "كود المعلم"
     },
     
     // 5. نموذج تسجيل الدخول الآمن للبوابة
     loginForm: {
-      subtitle: "بوابة فحص وتدقيق صلاحيات الوصول",
+      subtitle: "تسجيل الدخول إلى حسابك",
       labels: {
         nationalId: "الرقم القومي (١٤ رقم)",
-        password: "كلمة مرور النظام المعينة",
-        rememberMe: "الحفاظ على نشاط جلسة الدخول الحالية",
-        forgotPassword: "هل نسيت المعرفات السرية الخاصة بك؟"
+        password: "كلمة المرور",
+        rememberMe: "تذكرني على هذا الجهاز",
+        forgotPassword: "نسيت كلمة المرور؟"
       },
-      submitBtn: "تسجيل الدخول وإصدار التصريح",
-      noAccount: "ليس لديك ملف إداري معتمد على المنصة حتى الآن؟"
+      submitBtn: "تسجيل الدخول",
+      noAccount: "ليس لديك حساب بعد؟"
     },
 
     profilePage: {
-      title: "سجل الملف الشخصي للموظف",
-      subtitle: "بيانات الهوية المعتمدة والانتماء المؤسسي للكادر الإداري",
-      logoutBtn: "إنهاء الجلسة النشطة",
-      loading: "جاري التحقق من بيانات الاعتماد...",
-      error: "تعذر استرجاع بيانات الملف الشخصي. يرجى المحاولة لاحقاً.",
-      memberSince: "تاريخ تسجيل الحساب",
-      schoolAffiliation: "الانتماء المؤسسي"
+      title: "ملفي الشخصي",
+      subtitle: "بيانات الحساب والمدرسة المسجلة في النظام",
+      logoutBtn: "تسجيل الخروج",
+      loading: "جاري تحميل بيانات الملف الشخصي...",
+      error: "حدث خطأ أثناء تحميل البيانات. يرجى المحاولة لاحقاً.",
+      memberSince: "تاريخ التسجيل",
+      schoolAffiliation: "المدرسة / الجهة التابع لها"
     },
 
     // 6. حقوق الطبع والنشر السفلية العامة
     footer: { 
-      rights: "© 2026 جميع الحقوق الإدارية والبرمجية محفوظة لمنظومة بلاغات الصيانة الموحدة." 
+      rights: "© 2026 جميع الحقوق محفوظة لمنظومة بلاغات الصيانة الموحدة." 
     }
   }
 };

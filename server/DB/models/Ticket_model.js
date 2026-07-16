@@ -1,32 +1,26 @@
 const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-    unique: true
-  },
   asset: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   room: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   category: {
     type: String,
-    required: true
+    required: true,
+    enum: ['Infrastructure', 'Hardware', 'Electrical', 'Plumbing']
   },
   status: {
     type: String,
     required: true,
-    enum: ['Pending', 'In Progress', 'Resolved'],
-    default: 'Pending'
-  },
-  date: {
-    type: String,
-    required: true
+    enum: ['Pending_Approval', 'Approved', 'In_Progress', 'Resolved'],
+    default: 'Pending_Approval'
   },
   arCategory: {
     type: String,
@@ -44,13 +38,20 @@ const ticketSchema = new mongoose.Schema({
   },
   cost: {
     type: Number,
-    required: true
+    required: true,
+    min: 0,
+    default: 0
+  },
+  school: {
+    type: String,
+    required: true,
+    trim: true
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'staff',
     required: true
   }
-}, { timestamps: true });
+}, { timestamps: true }); // This handles your dates automatically!
 
 module.exports = mongoose.model('Ticket', ticketSchema, 'tickets');

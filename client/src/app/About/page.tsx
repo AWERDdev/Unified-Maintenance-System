@@ -64,7 +64,7 @@ export default function AboutPage() {
 
           </div>
 
-          {/* Technical Specifications Architecture Badge Footer */}
+          {/* Technical Specifications Architecture Badge Footer
           <section className="bg-white p-6 rounded-lg shadow-sm border border-[#E8ECEF] text-center">
             <h3 className="text-sm font-semibold tracking-wider text-[#4A5568] uppercase mb-4">
               {t.techStack}
@@ -76,7 +76,7 @@ export default function AboutPage() {
               <span className="bg-[#F4F6F9] text-[#0B2545] px-3 py-1.5 rounded border border-[#E8ECEF]">Tailwind Fluid Layouts</span>
               <span className="bg-[#F4F6F9] text-[#0B2545] px-3 py-1.5 rounded border border-[#E8ECEF]">JWT Cryptographic Sessions</span>
             </div>
-          </section>
+          </section> */}
 
         </main>
         <Fotter1/>

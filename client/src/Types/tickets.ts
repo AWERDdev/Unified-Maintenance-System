@@ -1,10 +1,10 @@
 // inside @/Types/tickets.ts
 export interface Ticket {
-  id: string;
+  _id: string;
   asset: string;
   room: string;
   category: string;
-  status: 'Pending' | 'In Progress' | 'Resolved';
+  status: 'Pending_Approval' | 'Approved' | 'In_Progress' | 'Resolved';
   date: string; // The flat date property on the ticket schema
   arCategory: string;
   adminApproved: boolean;
@@ -30,6 +30,5 @@ export interface PrincipalViewProps {
 export interface AdminViewProps {
   tickets: Ticket[];
   isRTL: boolean;
-  onApprove: (id: string) => void;
   onResolve: (id: string) => void;
 }

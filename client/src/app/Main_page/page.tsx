@@ -16,7 +16,7 @@ import { BASE_URL } from "@/tools/API_handler";
 import { ROUTES } from "@/Types/Routing";
 
 // Fetch handlers
-import { Fetch_tickets_my, Fetch_tickets_all, Update_ticket_approval, Resolve_ticket } from "@/tools/Fetch_tickets";
+import { Fetch_tickets_my, Update_ticket_approval, Resolve_ticket } from "@/tools/Fetch_tickets";
 
 export default function MainPage() {
   const router = useRouter();
@@ -87,9 +87,11 @@ export default function MainPage() {
         ];
 
         if (elevatedRoles.includes(activeRole)) {
-          fetchedTickets = await Fetch_tickets_all();
+          fetchedTickets = await Fetch_tickets_my();
+          console.log(fetchedTickets)
         } else {
           fetchedTickets = await Fetch_tickets_my();
+          console.log(fetchedTickets)
         }
 
         if (fetchedTickets) {
@@ -106,28 +108,22 @@ export default function MainPage() {
     checkUserAndFetchTickets();
   }, []);
 
-  const pendingCount = tickets.filter(t => t.status === 'Pending').length;
-  const inProgressCount = tickets.filter(t => t.status === 'In Progress').length;
+  const pendingCount = tickets.filter(t => t.status === 'Pending_Approval').length;
+  const inProgressCount = tickets.filter(t => t.status === 'In_Progress').length;
   const resolvedCount = tickets.filter(t => t.status === 'Resolved').length;
 
-  const approveTicket = async (ticketId: string) => { 
-    const updatedTicket = await Update_ticket_approval(ticketId);
-    if (updatedTicket) {
-      setTickets(prevTickets => prevTickets.map(ticket => ticket.id === ticketId ? updatedTicket : ticket));
-    }
-  };
 
   const approveFunding = async (ticketId: string) => { 
     const updatedTicket = await Update_ticket_approval(ticketId);
     if (updatedTicket) {
-      setTickets(prevTickets => prevTickets.map(ticket => ticket.id === ticketId ? updatedTicket : ticket));
+      setTickets(prevTickets => prevTickets.map(ticket => ticket._id === ticketId ? updatedTicket : ticket));
     }
   };
 
   const resolveTicket = async (ticketId: string) => { 
     const updatedTicket = await Resolve_ticket(ticketId);
     if (updatedTicket) {
-      setTickets(prevTickets => prevTickets.map(ticket => ticket.id === ticketId ? updatedTicket : ticket));
+      setTickets(prevTickets => prevTickets.map(ticket => ticket._id === ticketId ? updatedTicket : ticket));
     }
   };
 
@@ -170,7 +166,7 @@ export default function MainPage() {
           </div>
           
           {/* Action Trigger */}
-          {["Super Admin", "Administrator", "IT Specialist", "Teacher"].includes(staffType) && (
+          {["Super Admin", "Administrator", "IT Specialist"].includes(staffType) && (
             <button 
               className="bg-[#0B2545] hover:bg-[#13315C] text-white text-sm font-bold py-2.5 px-5 rounded-lg shadow-sm transition-all self-start md:self-auto hover:cursor-pointer"
               onClick={() => router.push(ROUTES.Ticket_creation_page)}
@@ -214,7 +210,7 @@ export default function MainPage() {
           )}
           
           {["Super Admin", "Administrator", "IT Specialist"].includes(staffType) && (
-            <AdminView tickets={tickets} isRTL={isRTL} onApprove={approveTicket} onResolve={resolveTicket} />
+            <AdminView tickets={tickets} isRTL={isRTL} onResolve={resolveTicket} />
           )}
           
           {["Teacher", "School Counselor", "Librarian", "Teacher Assistant", "Academic Coordinator"].includes(staffType) && (

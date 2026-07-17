@@ -86,6 +86,7 @@ export const Resolve_ticket = async (ticketId: string): Promise<Ticket | null> =
         }
 
         return ticketPayload;
+        
     } catch (error) {
         console.error(`Network or critical failure resolving ticket: ${error}`);
         return null;

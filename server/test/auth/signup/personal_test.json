@@ -18,6 +18,24 @@
       "phone": "01061234567"
     },
     {
+    "national_id": "28504120109876",
+    "legal_name": "Ahmed Mansour",
+    "staff_Type": "Administrator",
+    "school": "El-Nasr Secondary School",
+    "email": "ahmed.mansour@nasr-school.edu.eg",
+    "password": "AdminSecurePass2026!",
+    "phone": "01223456789"
+  },
+  {
+    "national_id": "29307220104321",
+    "legal_name": "Rania El-Shami",
+    "staff_Type": "Teacher",
+    "school": "El-Nasr Secondary School",
+    "email": "rania.elshami@nasr-school.edu.eg",
+    "password": "TeacherSecurePass2026!",
+    "phone": "01011223344"
+  },
+    {
       "national_id": "29805120105678",
       "legal_name": "Sarah Ali",
       "staff_Type": "Administrator",

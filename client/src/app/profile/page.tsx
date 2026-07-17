@@ -1,5 +1,5 @@
 'use client'
-import { NavBarAUTH } from "@/components/Navbar";
+import { NavBarNoOptionsAUTH } from "@/components/Navbar";
 import { Fotter2 } from "@/components/Fotter";
 import { useLanguage } from "@/tools/LanguageHandler";
 import { contentDict } from "@/Dict/Content_DICT";
@@ -108,7 +108,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#F4F6F9] font-sans" dir={isRTL ? "rtl" : "ltr"}>
       <header className="w-full sticky top-0 z-50">
-        <NavBarAUTH />
+        <NavBarNoOptionsAUTH />
       </header>
 
       <main className="grow max-w-2xl w-full mx-auto px-6 py-12">

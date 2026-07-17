@@ -16,7 +16,7 @@ app.use(helmet());
 const allowedOrigins = process.env.NODE_ENV === 'production' 
   ? ['https://unifiedmaintenance.vercel.app'] // Production only (No trailing slash!)
   : ['http://localhost:3000', 
-      'http://127.0.0.1:3000',
+      'http://169.254.186.199:3000',
       'http://localhost:3001', // <--- Add Next.js fallback port
       'http://127.0.0.1:3001']; // Development origins
 

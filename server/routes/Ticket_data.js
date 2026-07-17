@@ -49,12 +49,12 @@ router.post("/tickets/create", async (req, res) => {
         const user = await getAuthenticatedStaff(req, res);
         if (!user) return;
         
-        const allowedRoles = ["Administrator", "IT Specialist", "Teacher", "School Counselor", "Librarian", "Teacher Assistant", "Academic Coordinator"];
+        const allowedRoles = ["Super Admin","Administrator", "IT Specialist"];
         if (!allowedRoles.includes(user.staff_Type)) { 
             return res.status(403).json({ message: "Unauthorized access." });
          }
 
-        const { asset, room, category, arCategory, cost } = req.body;
+        const { asset, room, category, arCategory, cost, school } = req.body;
 
         if (!asset || !room || !category || !arCategory || cost === undefined) {
             return res.status(400).json({ message: "Missing required fields." });
@@ -70,11 +70,12 @@ router.post("/tickets/create", async (req, res) => {
             category,
             arCategory,
             cost,
-            status: "Pending",
+            status: "Pending_Approval",
             date: today,
             adminApproved: false,
             principalFunded: false,
-            createdBy: user._id
+            createdBy: user._id,
+            school: school || user.staff_school 
         });
 
         await newTicket.save();
@@ -96,11 +97,18 @@ router.get("/tickets/my", async (req, res) => {
         const user = await getAuthenticatedStaff(req, res);
         if (!user) return;
 
-        // Added .populate() here so teachers can also see their names/emails on their cards
-        const tickets = await Ticket.find({ createdBy: user._id })
-            .populate('createdBy', 'legal_name email');
+        // CRITICAL DEBUGS: Verify property signatures match exact DB naming
+        console.log(`[DEBUG] Authenticated User details: Email: ${user.email}, Role: ${user.staff_Type}`);
+        console.log(`[DEBUG] Checking string key field: user.staff_school = "${user.staff_school}"`);
+        console.log(`[DEBUG] Alternative checked schema key signature: user.school = "${user.school}"`);
 
-        console.log(`[DEBUG] Found ${tickets.length} tickets for user: ${user.email}`);
+        // Perform find query explicitly capturing evaluated field references
+        const filterQuery = { school: user.staff_school || user.school };
+        console.log("[DEBUG] Executing Mongoose filter object query structured as:", filterQuery);
+
+        const tickets = await Ticket.find(filterQuery);
+
+        console.log(`[DEBUG] Found ${tickets.length} tickets matching criteria.`);
         console.log("--- [DEBUG END] Success ---\n");
 
         return res.status(200).json(tickets);
@@ -116,7 +124,7 @@ router.get("/tickets/all", async (req, res) => {
         const user = await getAuthenticatedStaff(req, res);
         if (!user) return;
 
-        const allowedRoles = ["Super Admin", "Administrator", "IT Specialist", "Principal", "Vice Principal", "Teacher"];
+        const allowedRoles = ["Super Admin", "Administrator", "IT Specialist"];
         if (!allowedRoles.includes(user.staff_Type)) { 
             return res.status(403).json({ message: "Unauthorized access to ticket registry." });
         }
@@ -143,17 +151,17 @@ router.patch("/tickets/:id/approve", async (req, res) => {
 
         const { id } = req.params;
 
-        const ticket = await Ticket.findOne({ id });
+        const ticket = await Ticket.findOne({ _id: id });
 
         if (!ticket) {
             return res.status(404).json({ message: "Ticket not found." });
         }
 
-        // Admin/IT Specialist logic
-        const adminRoles = ["Administrator", "IT Specialist"];
-        if (adminRoles.includes(user.staff_Type)) {
-            ticket.adminApproved = true;
-        }
+        // // Admin/IT Specialist logic
+        // const adminRoles = ["Super Admin","Administrator", "IT Specialist"];
+        // if (adminRoles.includes(user.staff_Type)) {
+        //     ticket.adminApproved = true;
+        // }
 
         // Principal/Vice Principal logic
         const principalRoles = ["Principal", "Vice Principal"];
@@ -162,8 +170,8 @@ router.patch("/tickets/:id/approve", async (req, res) => {
         }
 
         // Dynamic status progression
-        if (ticket.adminApproved && ticket.principalFunded && ticket.status === "Pending") {
-            ticket.status = "In Progress";
+        if (ticket.principalFunded && ticket.status === "Pending_Approval") {
+            ticket.status = "In_Progress";
         }
 
         await ticket.save();

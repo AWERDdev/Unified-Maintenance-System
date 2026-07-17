@@ -1,5 +1,5 @@
 'use client'
-import { NavBar } from "@/components/Navbar";
+import { NavBarNoOptions_login } from "@/components/Navbar";
 import { Fotter1} from "@/components/Fotter";
 import {useLanguage } from "@/tools/LanguageHandler";
 import { contentDict } from "@/Dict/Content_DICT";
@@ -17,7 +17,7 @@ export default function AboutPage() {
         
         {/* 1. Navbar Container */}
         <header className="w-full sticky top-0 z-50">
-          <NavBar /> 
+          <NavBarNoOptions_login /> 
         </header>
 
         {/* 2. Main Executive Content Body */}

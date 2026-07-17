@@ -34,8 +34,8 @@ export const TeacherView = ({ tickets, isRTL }: TeacherViewProps) => {
           {/* Table Body */}
           <tbody className="divide-y divide-[#F4F6F9] text-[#0A192F]">
             {tickets.map((ticket) => (
-              <tr key={ticket.id} className="hover:bg-slate-50 transition-colors">
-                <td className="px-6 py-4 font-mono text-xs font-bold text-[#B0926A]">{ticket.id}</td>
+              <tr key={ticket._id} className="hover:bg-slate-50 transition-colors">
+                <td className="px-6 py-4 font-mono text-xs font-bold text-[#B0926A]">{ticket._id}</td>
                 <td className="px-6 py-4 font-medium">{ticket.asset}</td>
                 <td className="px-6 py-4 text-[#4A5568]">{ticket.room}</td>
                 <td className="px-6 py-4">

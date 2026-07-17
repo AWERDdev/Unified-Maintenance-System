@@ -1,4 +1,5 @@
 // 1. Core Unique Indexes (Enforces data integrity, prevents duplicate signups)
+db.createCollection("staff")
 db.staff.createIndex({ "national_id": 1 }, { unique: true });
 db.staff.createIndex({ "legal_name": 1 }, { unique: true });
 db.staff.createIndex({ "phone": 1 }, { unique: true });

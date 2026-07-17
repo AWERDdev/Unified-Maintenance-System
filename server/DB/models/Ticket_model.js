@@ -14,7 +14,7 @@ const ticketSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ['Infrastructure', 'Hardware', 'Electrical', 'Plumbing']
+    enum: ["IT_Equipment" , "Electrical" , "Plumbing" , "Furniture" , "Structural"]
   },
   status: {
     type: String,

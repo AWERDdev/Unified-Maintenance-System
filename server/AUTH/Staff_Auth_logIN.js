@@ -50,7 +50,8 @@ res.cookie('token', token, {
     httpOnly: true,
     secure: isProd ? true : false, // Must be true if sameSite is 'none'
     sameSite: isProd ? "none" : "lax", // 'none' allows cross-domain cookies over HTTPS
-    maxAge: 60 * 60 * 1000 // 1 hour
+    maxAge: 60 * 60 * 1000, // 1 hour
+    path: '/'
 });
 
         console.log(`[INFO] Login process completed successfully for user: ${user.email}`);

@@ -11,6 +11,7 @@ router.post("/staff/logout", (req, res) => {
         httpOnly: true,
         secure: isProd ? true : false,
         sameSite: isProd ? "none" : "lax",
+        path: '/'
     });
 
     console.log(`[INFO] Authentication cookie cleared successfully`);
